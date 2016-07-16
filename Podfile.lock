@@ -1,0 +1,53 @@
+PODS:
+  - Alamofire (3.4.1)
+  - AlamofireObjectMapper (3.0.0):
+    - Alamofire (~> 3.2)
+    - ObjectMapper (~> 1.0)
+  - AppInjector (0.0.2)
+  - KFSwiftImageLoader (2.0.1)
+  - Nimble (4.1.0)
+  - ObjectMapper (1.3.0)
+  - OMGHTTPURLRQ (3.1.2):
+    - OMGHTTPURLRQ/RQ (= 3.1.2)
+  - OMGHTTPURLRQ/FormURLEncode (3.1.2)
+  - OMGHTTPURLRQ/RQ (3.1.2):
+    - OMGHTTPURLRQ/FormURLEncode
+    - OMGHTTPURLRQ/UserAgent
+  - OMGHTTPURLRQ/UserAgent (3.1.2)
+  - PromiseKit (3.2.0):
+    - PromiseKit/Foundation (= 3.2.0)
+    - PromiseKit/QuartzCore (= 3.2.0)
+    - PromiseKit/UIKit (= 3.2.0)
+  - PromiseKit/CorePromise (3.2.0)
+  - PromiseKit/Foundation (3.2.0):
+    - OMGHTTPURLRQ (~> 3.1.0)
+    - PromiseKit/CorePromise
+  - PromiseKit/QuartzCore (3.2.0):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (3.2.0):
+    - PromiseKit/CorePromise
+  - SnapKit (0.21.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 3.4)
+  - AlamofireObjectMapper (~> 3.0)
+  - AppInjector (~> 0.0.2)
+  - KFSwiftImageLoader (~> 2.0)
+  - Nimble
+  - PromiseKit (~> 3.2.0)
+  - SnapKit (~> 0.21.1)
+
+SPEC CHECKSUMS:
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  AlamofireObjectMapper: 2d16585d06177be0116d76de73497e77437798af
+  AppInjector: 21572f9cf6c5a34735d1cfa713d8830697ba7a2d
+  KFSwiftImageLoader: a2b8a33a89116c767e7af8d2c109e8c483037b19
+  Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
+  ObjectMapper: 4eb08a726e9791a93b2632049951b56a7c17e471
+  OMGHTTPURLRQ: 38316b56d88125c600bcdb16df8329147da2b0ee
+  PromiseKit: 1db024241265f428137a9f3c00ff9590740c4be6
+  SnapKit: bbad04cb016c7cead63965f16b00c09318d271ee
+
+PODFILE CHECKSUM: 582d0ec58124f3a827e95a9c298829721e2496bc
+
+COCOAPODS: 1.0.0

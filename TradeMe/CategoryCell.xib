@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" rowHeight="178" id="06Z-gB-eAn" customClass="CategoryCell" customModule="TradeMe" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="178"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="06Z-gB-eAn" id="HOS-KO-AcO">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="177"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABy-Dg-1er">
+                        <rect key="frame" x="8" y="79" width="28" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="detail" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hV-fz-ox2">
+                        <rect key="frame" x="344" y="79" width="40" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="0.66000000000000003" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7hV-fz-ox2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ABy-Dg-1er" secondAttribute="trailing" constant="8" id="499-fE-Hkp"/>
+                    <constraint firstItem="ABy-Dg-1er" firstAttribute="leading" secondItem="HOS-KO-AcO" secondAttribute="leading" constant="8" id="SO2-83-6Gi"/>
+                    <constraint firstItem="7hV-fz-ox2" firstAttribute="centerY" secondItem="HOS-KO-AcO" secondAttribute="centerY" id="Yb1-1s-0te"/>
+                    <constraint firstItem="ABy-Dg-1er" firstAttribute="centerY" secondItem="HOS-KO-AcO" secondAttribute="centerY" id="rKc-DU-6kY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="7hV-fz-ox2" secondAttribute="trailing" constant="30" id="LdR-XJ-qaX"/>
+            </constraints>
+            <connections>
+                <outlet property="detailLabel" destination="7hV-fz-ox2" id="URK-9Y-XeN"/>
+                <outlet property="titleLabel" destination="ABy-Dg-1er" id="jp4-W3-fX4"/>
+            </connections>
+            <point key="canvasLocation" x="334" y="235"/>
+        </tableViewCell>
+    </objects>
+</document>
