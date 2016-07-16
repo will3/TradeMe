@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListingPosterCell" rowHeight="308" id="53t-VU-WJ2" customClass="ListingPosterCell" customModule="TradeMe" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="406" height="308"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="53t-VU-WJ2" id="7ox-4F-Auv">
+                <rect key="frame" x="0.0" y="0.0" width="406" height="307"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Up3-uM-hJb">
+                        <rect key="frame" x="0.0" y="0.0" width="406" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="39Z-hQ-08f"/>
+                        </constraints>
+                    </imageView>
+                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lyf-By-krL">
+                        <rect key="frame" x="0.0" y="0.0" width="406" height="307"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Lyf-By-krL" firstAttribute="top" secondItem="7ox-4F-Auv" secondAttribute="top" id="AZc-Jg-yCT"/>
+                    <constraint firstItem="Up3-uM-hJb" firstAttribute="leading" secondItem="7ox-4F-Auv" secondAttribute="leading" id="DLT-f3-cG6"/>
+                    <constraint firstItem="Lyf-By-krL" firstAttribute="leading" secondItem="7ox-4F-Auv" secondAttribute="leading" id="FAt-in-R8r"/>
+                    <constraint firstAttribute="trailing" secondItem="Lyf-By-krL" secondAttribute="trailing" id="J9M-yp-yXJ"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Up3-uM-hJb" secondAttribute="bottom" id="e3S-bd-9er"/>
+                    <constraint firstItem="Up3-uM-hJb" firstAttribute="top" secondItem="7ox-4F-Auv" secondAttribute="top" id="kwT-wf-pjq"/>
+                    <constraint firstAttribute="bottom" secondItem="Lyf-By-krL" secondAttribute="bottom" id="osn-7r-VaU"/>
+                    <constraint firstAttribute="trailing" secondItem="Up3-uM-hJb" secondAttribute="trailing" id="v5K-HL-yEj"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="overlayView" destination="Lyf-By-krL" id="4HM-il-FXa"/>
+                <outlet property="posterImageView" destination="Up3-uM-hJb" id="Zyz-kn-5b2"/>
+            </connections>
+            <point key="canvasLocation" x="260" y="311"/>
+        </tableViewCell>
+    </objects>
+</document>

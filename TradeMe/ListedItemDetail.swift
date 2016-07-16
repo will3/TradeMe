@@ -75,7 +75,7 @@ class ListedItemDetail: Listing {
     var bids: BidCollection?
     var questions: Questions?
     var photos = [Photo]()
-    var allowsPickups = "" // None Allow Demand Forbid
+    var allowsPickups = AllowsPickups.None
     var shippingOptions = [ShippingOption]()
     var paymentOptions = ""
     var isOrNearOffer = false

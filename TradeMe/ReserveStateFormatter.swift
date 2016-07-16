@@ -16,7 +16,7 @@ class ReserveStateFormatter {
         case .Met:
             return NSLocalizedString("Reserve Met", comment: "")
         case .NotMet:
-            return NSLocalizedString("Reserve Not Met", comment: "")
+            return ""
         case .NotApplicable:
             return ""
         }

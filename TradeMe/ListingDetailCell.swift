@@ -10,5 +10,13 @@ import Foundation
 import UIKit
 
 class ListingDetailCell: UITableViewCell {
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
+}
+
+extension ListingDetailCell {
+    func drawListingDetailRow(row: ListingDetailRow) {
+        titleLabel.text = row.title
+        detailLabel.text = row.detail
+    }
 }

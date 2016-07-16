@@ -19,6 +19,9 @@ class CellIdentifiers {
     static let loadingCell = "LoadingCell"
     static let emptyCell = "EmptyCell"
     static let listingHeaderCell = "ListingHeaderCell"
+    static let listingDetailCell = "ListingDetailCell"
+    static let headerCell = "HeaderCell"
+    static let listingPosterCell = "ListingPosterCell"
 }
 
 class Images {
@@ -49,15 +52,15 @@ class Layout {
     static let listingPosterWidth = CGFloat(120.0)
     static let listingPosterHeight = CGFloat(120.0)
     static let homeHeaderContainerHeight = CGFloat(42.0)
+    static let listingDetailHeaderHeight = CGFloat(200.0)
+    static let navBarHeight = CGFloat(42.0)
+    static let statusBarHeight = CGFloat(20.0)
+    static let listingDetailHeaderTitleTop = CGFloat(24.0)
 }
 
 class Colors {
     static let primary = UIColor(netHex: 0xF6BE45)
     static let secondary = UIColor(netHex: 0x924A16)
-}
-
-class Nibs {
-    static let listingDetailHeaderView = "ListingDetailHeaderView"
 }
 
 class DateConstants {
