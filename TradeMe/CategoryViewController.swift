@@ -116,7 +116,7 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier = CellIdentifiers.categoryCell
+        let cellIdentifier = CellIdentifiers.categoryCell.rawValue
         guard let category = category else { return UITableViewCell() }
         guard
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier),

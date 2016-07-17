@@ -9,6 +9,37 @@
 import Foundation
 import ObjectMapper
 
+enum PhotoSize : String {
+    case Thumbnail = "Thumbnail"
+    case List = "List"
+    case Medium = "Medium"
+    case Gallery = "Gallery"
+    case Large = "Large"
+    case FullSize = "FullSize"
+}
+
+enum SortOrder : String {
+    case Default = "Default"
+    case FeaturedFirst = "FeaturedFirst"
+    case SuperGridFeaturedFirst = "SuperGridFeaturedFirst"
+    case TitleAsc = "TitleAsc"
+    case ExpiryAsc = "ExpiryAsc"
+    case ExpiryDesc = "ExpiryDesc"
+    case PriceAsc = "PriceAsc"
+    case PriceDesc = "PriceDesc"
+    case BidsMost = "BidsMost"
+    case BuyNowAsc = "BuyNowAsc"
+    case BuyNowDesc = "BuyNowDesc"
+    case ReviewsDesc = "ReviewsDesc"
+    case HighestSalary = "HighestSalary"
+    case LowestSalary = "LowestSalary"
+    case LowestKilometres = "LowestKilometres"
+    case HighestKilometres = "HighestKilometres"
+    case NewestVehicle = "NewestVehicle"
+    case OldestVehicle = "OldestVehicle"
+    case BestMatch = "BestMatch"
+}
+
 class SearchRequest: Mappable {
     init() { }
     required init?(_ map: Map) { }
@@ -39,12 +70,12 @@ class SearchRequest: Mappable {
     var member_listing: Int?
     var page: Int?
     var pay: String? // All PayNow
-    var photo_size: String? // Thumbnail List Medium Gallery Large FullSize
+    var photo_size: PhotoSize? // Thumbnail List Medium Gallery Large FullSize
     var return_metadata: Bool?
     var rows: Int?
     var search_string: String?
     var shipping_method: String? // All Free Pickup
-    var sort_order: String? // Default FeaturedFirst SuperGridFeaturedFirst TitleAsc ExpiryAsc ExpiryDesc PriceAsc PriceDesc BidsMost BuyNowAsc BuyNowDesc ReviewsDesc HighestSalary LowestSalary LowestKilometres HighestKilometres NewestVehicle OldestVehicle BestMatch
+    var sort_order: SortOrder?
     
     var user_district: Int?
     var user_region: Int?

@@ -20,11 +20,9 @@ class AppContainer {
             return currencyFormat
         }
         
-        injector.bind("appSettings") { AppSettings.defaultSettings }
-        
         injector.bind("listingTableController", type: ListingTableController.self).withDependencies(["currencyFormat", "appSettings"])
         
-        injector.bind("homeViewController", type: HomeViewController.self).withDependencies(["listingTableController"])
+        injector.bind("homeViewController", type: HomeViewController.self).withDependencies(["listingTableController", "listingService"])
         
         injector.bind("listingService") {
             return ListingService()

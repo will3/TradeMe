@@ -14,18 +14,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yEN-pg-qm7">
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ift-Y8-o3O">
                         <rect key="frame" x="150" y="12" width="20" height="20"/>
-                        <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Xxc-nk-LHN">
-                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
-                    </stackView>
+                    </activityIndicatorView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="yEN-pg-qm7" firstAttribute="centerX" secondItem="5B7-5g-mda" secondAttribute="centerX" id="avR-vl-TxT"/>
-                    <constraint firstItem="yEN-pg-qm7" firstAttribute="centerY" secondItem="5B7-5g-mda" secondAttribute="centerY" id="jwc-FD-cof"/>
+                    <constraint firstItem="Ift-Y8-o3O" firstAttribute="centerX" secondItem="5B7-5g-mda" secondAttribute="centerX" id="QWM-aU-aJs"/>
+                    <constraint firstItem="Ift-Y8-o3O" firstAttribute="centerY" secondItem="5B7-5g-mda" secondAttribute="centerY" id="tOW-B7-OEo"/>
                 </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="221" y="333"/>

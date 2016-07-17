@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 extension UITableView {
-    func registerCells(cellIdentifiers: [String]) {
+    func registerCells(cellIdentifiers: [CellIdentifiers]) {
         cellIdentifiers.forEach { cellIdentifier in
             self.registerNib(
-                UINib(nibName: cellIdentifier, bundle: NSBundle.mainBundle()),
-                forCellReuseIdentifier: cellIdentifier)
+                UINib(nibName: cellIdentifier.rawValue, bundle: NSBundle.mainBundle()),
+                forCellReuseIdentifier: cellIdentifier.rawValue)
         }
     }
 }

@@ -13,15 +13,16 @@ class ViewControllers {
     static let categoryViewController = "CategoryViewController"
 }
 
-class CellIdentifiers {
-    static let categoryCell = "CategoryCell"
-    static let listingCell = "ListingCell"
-    static let loadingCell = "LoadingCell"
-    static let emptyCell = "EmptyCell"
-    static let listingHeaderCell = "ListingHeaderCell"
-    static let listingDetailCell = "ListingDetailCell"
-    static let headerCell = "HeaderCell"
-    static let listingPosterCell = "ListingPosterCell"
+enum CellIdentifiers : String {
+    case categoryCell = "CategoryCell"
+    case listingCell = "ListingCell"
+    case loadingCell = "LoadingCell"
+    case emptyCell = "EmptyCell"
+    case listingHeaderCell = "ListingHeaderCell"
+    case listingDetailCell = "ListingDetailCell"
+    case headerCell = "HeaderCell"
+    case listingPosterCell = "ListingPosterCell"
+    case listingFooterCell = "ListingFooterCell"
 }
 
 class Images {
@@ -48,9 +49,8 @@ class FatalErrors {
 }
 
 class Layout {
-    static let listingPosterLeftPadding = CGFloat(8.0)
-    static let listingPosterWidth = CGFloat(120.0)
-    static let listingPosterHeight = CGFloat(120.0)
+    static let listingPosterWidth = CGFloat(100.0)
+    static let listingPosterHeight = CGFloat(100.0)
     static let homeHeaderContainerHeight = CGFloat(42.0)
     static let listingDetailHeaderHeight = CGFloat(200.0)
     static let navBarHeight = CGFloat(42.0)
@@ -61,6 +61,8 @@ class Layout {
 class Colors {
     static let primary = UIColor(netHex: 0xF6BE45)
     static let secondary = UIColor(netHex: 0x924A16)
+    static let featuredBackground = UIColor(netHex: 0xFFFEFC)
+    static let normalBackground = UIColor(netHex: 0xFFFFFF)
 }
 
 class DateConstants {

@@ -10,30 +10,46 @@ import Foundation
 import UIKit
 import AppInjector
 
+/**
+ HomeViewController is the first screen the user sees
+
+ Use search bar and / or filter button to limit the listings shown by search terms or category
+ Tap on any listing to see details
+ */
 class HomeViewController: UIViewController, UIPopoverPresentationControllerDelegate, CategoryViewControllerDelegate, UISearchBarDelegate, ListingTableControllerDelegate {
     
     // MARK: Outlets
     
-    @IBOutlet weak var categoryButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var headerContainer: UIView!
-    @IBOutlet weak var headerContainerTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var filterButton: UIButton!
     
-    var listingService = ListingService()
-    var category: Category?
-    var searchBar = UISearchBar()
-    var pageSize = 20
-    var page = 1
+    // MARK: Injected
     
-    var list = [Listing]()
-    
+    // Listing service
+    var listingService: ListingService!
+    // Listing table controller
     var listingTableController: ListingTableController!
     
-    var categoryPopup: UIViewController?
+    // Search bar shown
+    var searchBar = UISearchBar()
+    // Page size
+    var pageSize = 20
+    // Current page
+    var page = 1
+    // Category selected, if any
+    var category: Category?
+    // List shown
+    var list = [Listing]()
     
+    // Throttle used to limit number of api calls down by changing the search bar text
     var searchBarTextThrottle = Throttle<String>()
     
-    var viewExpanded = false
+    // Category popup instance to cache, managed internally
+    private var categoryPopup: UIViewController?
+    // True is navigation bar and filter button is hidden
+    private var viewExpanded = false
+    // Flag for keyboard shown
+    private var keyboardShown = false
     
     // MARK: UIViewController
     
@@ -42,29 +58,38 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         
         Injector.defaultInjector.injectDependencies(self)
         
+        // Set up table view
         listingTableController.hookTableView(tableView)
         listingTableController.delegate = self
+        
         listingTableController.scrollViewTracker
+            // Collapse view when scrolling up
             .onScrollUp { scrollView in
-                if self.viewExpanded {
+                if !self.keyboardShown && self.viewExpanded {
                     self.collapseView()
                 }
             }
+            // Expand view when scrolling down
             .onScrollDown { scrollView in
-                if !self.viewExpanded {
+                if !self.keyboardShown && !self.viewExpanded {
                     self.expandView()
                 }
         }
         
+        // Set up navigation title view
         searchBar.frame = CGRectMake(0, 0, 260.0, 30.0)
         searchBar.delegate = self
         navigationItem.titleView = searchBar
+        updateSearchbarPlaceholder()
         
+        // Set up navigation bar color
         navigationController?.navigationBar.barTintColor = Colors.primary
         navigationController?.navigationBar.translucent = false
         
+        // Update listing
         updateList()
         
+        // Set up search bar throttle
         searchBarTextThrottle.next { searchText in
             self.updateList()
         }
@@ -82,22 +107,15 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomeViewController.keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomeViewController.keyboardDidHide(_:)), name: UIKeyboardDidHideNotification, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    @IBAction func onCategoryButtonPressed(sender: UIButton) {
-        if let categoryPopup = categoryPopup {
-            configurePopover(categoryPopup)
-            presentViewController(categoryPopup, animated: true) { }
-        } else {
-            performSegueWithIdentifier(Segues.category, sender: nil)
-        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -121,22 +139,35 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         }
     }
     
+    // MARK: IBAction
+    
+    @IBAction func onFilterPressed(sender: UIButton) {
+        if let categoryPopup = categoryPopup {
+            configurePopover(categoryPopup)
+            presentViewController(categoryPopup, animated: true) { }
+        } else {
+            performSegueWithIdentifier(Segues.category, sender: nil)
+        }
+    }
+    
     // MARK: Keyboard events
     
     func keyboardDidShow(notification: NSNotification) {
         let keyboardHeight = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue().height ?? 0
         
         if keyboardHeight > 0 {
-            var insets = tableView.contentInset
-            insets.bottom = keyboardHeight
-            tableView.contentInset = insets
-            tableView.scrollIndicatorInsets = insets
+            tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardHeight, 0)
+            tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, keyboardHeight, 0)
         }
+        
+        keyboardShown = true
     }
     
     func keyboardDidHide(notification: NSNotification) {
         tableView.scrollIndicatorInsets = UIEdgeInsetsZero
         tableView.contentInset = UIEdgeInsetsZero
+        
+        keyboardShown = false
     }
     
     // MARK: Search bar events
@@ -208,6 +239,8 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         request.category = category?.number
         request.page = page
         request.rows = pageSize
+        request.photo_size = PhotoSize.Medium
+        
         listingService.search(request).then { result -> Void in
             self.list = result.list
             self.listingTableController.reloadData(self.tableView, list: result.list)
@@ -216,8 +249,8 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     private func configurePopover(popover: UIViewController) {
         popover.modalPresentationStyle = UIModalPresentationStyle.Popover
-        popover.popoverPresentationController?.sourceRect = categoryButton.bounds
-        popover.popoverPresentationController?.sourceView = self.categoryButton
+        popover.popoverPresentationController?.sourceRect = filterButton.bounds
+        popover.popoverPresentationController?.sourceView = filterButton
         popover.popoverPresentationController?.delegate = self
     }
     
@@ -235,8 +268,7 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         viewExpanded = true
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         UIView.animate {
-            self.headerContainer.alpha = 0.0
-            self.headerContainerTopConstraint.constant = -Layout.homeHeaderContainerHeight
+            self.filterButton.alpha = 0.0
         }
     }
     
@@ -244,8 +276,7 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         viewExpanded = false
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         UIView.animate {
-            self.headerContainer.alpha = 1.0
-            self.headerContainerTopConstraint.constant = 0.0
+            self.filterButton.alpha = 1.0
         }
     }
 }

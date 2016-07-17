@@ -12,11 +12,11 @@ class ReserveStateFormatter {
     static func format(reserveState: ReserveState) -> String {
         switch reserveState {
         case .None:
-            return ""
+            return NSLocalizedString("No reserve", comment: "")
         case .Met:
-            return NSLocalizedString("Reserve Met", comment: "")
+            return NSLocalizedString("Reserve met", comment: "")
         case .NotMet:
-            return ""
+            return NSLocalizedString("Reserve not met", comment: "")
         case .NotApplicable:
             return ""
         }

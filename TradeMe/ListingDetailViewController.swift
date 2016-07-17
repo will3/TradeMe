@@ -27,6 +27,7 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
         case Header = 1
         case DetailHeader = 2
         case Details = 3
+        case Footer = 4
     }
     
     @IBOutlet weak var tableView: UITableView!
@@ -50,9 +51,11 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        
         Injector.defaultInjector.injectDependencies(self)
         
-        tableView.registerCells([CellIdentifiers.listingHeaderCell, CellIdentifiers.listingDetailCell, CellIdentifiers.headerCell, CellIdentifiers.listingPosterCell])
+        tableView.registerCells([CellIdentifiers.listingHeaderCell, CellIdentifiers.listingDetailCell, CellIdentifiers.headerCell, CellIdentifiers.listingPosterCell, CellIdentifiers.listingFooterCell])
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -126,13 +129,13 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func onBackPressed(sender: UIButton) {
-        navigationController?.dismissViewControllerAnimated(true) { }
+        navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,18 +143,20 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
         
         switch sectionEnum {
         case .Poster:
-            return 1
+            return listingDetail?.photos.count > 0 ? 1 : 0
         case .Header:
             return 1
         case .DetailHeader:
             return 1
         case .Details:
             return detailRows.count
+        case .Footer:
+            return 1
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier = cellIdentifierForIndexPath(indexPath)
+        let cellIdentifier = cellIdentifierForIndexPath(indexPath).rawValue
         guard let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) else {
             fatalError(FatalErrors.failedToDequeueCell(cellIdentifier))
         }
@@ -185,14 +190,26 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
             }
             let row = detailRows[indexPath.row]
             detailCell.drawListingDetailRow(row)
+        case .Footer:
+            guard let footerCell = cell as? ListingFooterCell else {
+                fatalError(FatalErrors.wrongCellType(ListingFooterCell.self, actual: cell))
+            }
+            footerCell.drawListingDetail(listingDetail)
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         
+        let seperatorParams = seperatorParamsForIndexPath(indexPath)
+        cell.contentView.addSeparator(seperatorParams)
+        
+        cell.backgroundView = UIView()
+        cell.backgroundView?.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = backgroundColorForIndexPath(indexPath)
+        
         return cell
     }
     
-    func cellIdentifierForIndexPath(indexPath: NSIndexPath) -> String {
+    func cellIdentifierForIndexPath(indexPath: NSIndexPath) -> CellIdentifiers {
         let sectionEnum = Sections(rawValue: indexPath.section)!
         
         switch sectionEnum {
@@ -204,6 +221,8 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
             return CellIdentifiers.listingDetailCell
         case .Poster:
             return CellIdentifiers.listingPosterCell
+        case .Footer:
+            return CellIdentifiers.listingFooterCell
         }
     }
     
@@ -231,5 +250,32 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
             updateTitleLabelFrame(titleLabelOffsetY)
         }
         
+    }
+    
+    // MARK: Private
+    
+    private func seperatorParamsForIndexPath(indexPath: NSIndexPath) -> SeperatorParams {
+        let sectionEnum = Sections(rawValue: indexPath.section)!
+        
+        switch sectionEnum {
+        case .DetailHeader:
+            return SeperatorParams.across
+        case .Details:
+            return indexPath.row == tableView.numberOfRowsInSection(indexPath.section) - 1 ?
+                SeperatorParams.across : SeperatorParams.row
+        default:
+            return SeperatorParams.none
+        }
+    }
+    
+    private func backgroundColorForIndexPath(indexPath: NSIndexPath) -> UIColor {
+        let sectionEnum = Sections(rawValue: indexPath.section)!
+        
+        switch sectionEnum {
+        case .Details:
+            return UIColor.whiteColor()
+        default:
+            return UIColor.clearColor()
+        }
     }
 }

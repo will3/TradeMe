@@ -15,13 +15,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ABy-Dg-1er">
-                        <rect key="frame" x="8" y="79" width="28" height="20"/>
+                        <rect key="frame" x="10" y="79" width="28" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="detail" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hV-fz-ox2">
-                        <rect key="frame" x="344" y="79" width="40" height="20"/>
+                        <rect key="frame" x="342" y="79" width="40" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" white="0.66000000000000003" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -29,13 +29,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="7hV-fz-ox2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ABy-Dg-1er" secondAttribute="trailing" constant="8" id="499-fE-Hkp"/>
-                    <constraint firstItem="ABy-Dg-1er" firstAttribute="leading" secondItem="HOS-KO-AcO" secondAttribute="leading" constant="8" id="SO2-83-6Gi"/>
+                    <constraint firstItem="ABy-Dg-1er" firstAttribute="leading" secondItem="HOS-KO-AcO" secondAttribute="leading" constant="10" id="SO2-83-6Gi"/>
                     <constraint firstItem="7hV-fz-ox2" firstAttribute="centerY" secondItem="HOS-KO-AcO" secondAttribute="centerY" id="Yb1-1s-0te"/>
                     <constraint firstItem="ABy-Dg-1er" firstAttribute="centerY" secondItem="HOS-KO-AcO" secondAttribute="centerY" id="rKc-DU-6kY"/>
                 </constraints>
             </tableViewCellContentView>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="7hV-fz-ox2" secondAttribute="trailing" constant="30" id="LdR-XJ-qaX"/>
+                <constraint firstAttribute="trailing" secondItem="7hV-fz-ox2" secondAttribute="trailing" constant="32" id="LdR-XJ-qaX"/>
             </constraints>
             <connections>
                 <outlet property="detailLabel" destination="7hV-fz-ox2" id="URK-9Y-XeN"/>

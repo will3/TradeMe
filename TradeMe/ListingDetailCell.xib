@@ -15,25 +15,25 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aN0-2g-dhh">
-                        <rect key="frame" x="8" y="8" width="352" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="0.66000000000000003" alpha="1" colorSpace="calibratedWhite"/>
+                        <rect key="frame" x="12" y="8" width="344" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="detail" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gM-ad-7gm">
-                        <rect key="frame" x="8" y="25" width="352" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <rect key="frame" x="12" y="25" width="344" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="aN0-2g-dhh" firstAttribute="top" secondItem="nAj-Oz-m2K" secondAttribute="top" constant="8" id="4kO-qX-vgS"/>
-                    <constraint firstItem="6gM-ad-7gm" firstAttribute="leading" secondItem="nAj-Oz-m2K" secondAttribute="leading" constant="8" id="97z-hB-NGI"/>
-                    <constraint firstAttribute="trailing" secondItem="aN0-2g-dhh" secondAttribute="trailing" constant="8" id="RFw-vf-mKD"/>
-                    <constraint firstItem="aN0-2g-dhh" firstAttribute="leading" secondItem="nAj-Oz-m2K" secondAttribute="leading" constant="8" id="TQ8-Jy-cdO"/>
-                    <constraint firstAttribute="trailing" secondItem="6gM-ad-7gm" secondAttribute="trailing" constant="8" id="aEO-8Q-jRt"/>
-                    <constraint firstItem="6gM-ad-7gm" firstAttribute="top" secondItem="aN0-2g-dhh" secondAttribute="bottom" id="fgQ-Rv-uyg"/>
+                    <constraint firstItem="6gM-ad-7gm" firstAttribute="leading" secondItem="nAj-Oz-m2K" secondAttribute="leading" constant="12" id="97z-hB-NGI"/>
+                    <constraint firstAttribute="trailing" secondItem="aN0-2g-dhh" secondAttribute="trailing" constant="12" id="RFw-vf-mKD"/>
+                    <constraint firstItem="aN0-2g-dhh" firstAttribute="leading" secondItem="nAj-Oz-m2K" secondAttribute="leading" constant="12" id="TQ8-Jy-cdO"/>
+                    <constraint firstAttribute="trailing" secondItem="6gM-ad-7gm" secondAttribute="trailing" constant="12" id="aEO-8Q-jRt"/>
+                    <constraint firstItem="6gM-ad-7gm" firstAttribute="top" secondItem="aN0-2g-dhh" secondAttribute="bottom" constant="2" id="fgQ-Rv-uyg"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6gM-ad-7gm" secondAttribute="bottom" constant="8" id="tjs-yi-bRg"/>
                 </constraints>
             </tableViewCellContentView>

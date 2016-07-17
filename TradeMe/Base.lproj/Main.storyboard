@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -35,54 +36,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CBL-js-qdj">
-                                <rect key="frame" x="0.0" y="106" width="320" height="374"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCn-19-M9i">
-                                <rect key="frame" x="0.0" y="64" width="320" height="42"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJx-Ee-O3f">
-                                        <rect key="frame" x="119" y="11" width="83" height="20"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <state key="normal" title="Category" image="filter.png">
-                                            <color key="titleColor" red="0.5725490196078431" green="0.29019607843137252" blue="0.086274509803921567" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="onCategoryButtonPressed:" destination="0CT-dV-3f7" eventType="touchUpInside" id="ZSK-2Z-Vw1"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.96470588235294119" green="0.74509803921568629" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wvu-ax-TS2" customClass="FilterButton" customModule="TradeMe" customModuleProvider="target">
+                                <rect key="frame" x="248" y="408" width="52" height="52"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.74509803919999995" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="wJx-Ee-O3f" firstAttribute="centerY" secondItem="jCn-19-M9i" secondAttribute="centerY" id="KY9-35-vJk"/>
-                                    <constraint firstItem="wJx-Ee-O3f" firstAttribute="centerX" secondItem="jCn-19-M9i" secondAttribute="centerX" id="RZg-q7-SYV"/>
-                                    <constraint firstAttribute="height" constant="42" id="qP4-ui-Kbd"/>
+                                    <constraint firstAttribute="width" constant="52" id="DCp-LQ-fGG"/>
+                                    <constraint firstAttribute="height" constant="52" id="oVc-z1-H2k"/>
                                 </constraints>
-                            </view>
+                                <state key="normal" image="filter2.png"/>
+                                <connections>
+                                    <action selector="onFilterPressed:" destination="0CT-dV-3f7" eventType="touchUpInside" id="f39-PQ-8fN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="YnP-mU-HGI" firstAttribute="top" secondItem="CBL-js-qdj" secondAttribute="bottom" id="9Zp-YN-Qb7"/>
                             <constraint firstItem="CBL-js-qdj" firstAttribute="leading" secondItem="okV-PL-hNB" secondAttribute="leading" id="eew-Lr-m9d"/>
-                            <constraint firstItem="jCn-19-M9i" firstAttribute="leading" secondItem="okV-PL-hNB" secondAttribute="leading" id="hTu-AM-fvM"/>
-                            <constraint firstItem="jCn-19-M9i" firstAttribute="top" secondItem="DPa-Lv-42S" secondAttribute="bottom" id="juw-lV-all"/>
+                            <constraint firstItem="CBL-js-qdj" firstAttribute="top" secondItem="okV-PL-hNB" secondAttribute="topMargin" id="eup-7g-NuO"/>
+                            <constraint firstItem="YnP-mU-HGI" firstAttribute="top" secondItem="wvu-ax-TS2" secondAttribute="bottom" constant="20" id="jgG-Iz-6kS"/>
                             <constraint firstAttribute="trailing" secondItem="CBL-js-qdj" secondAttribute="trailing" id="lre-8k-f2K"/>
-                            <constraint firstItem="CBL-js-qdj" firstAttribute="top" secondItem="jCn-19-M9i" secondAttribute="bottom" id="xPp-tS-Z3p"/>
-                            <constraint firstAttribute="trailing" secondItem="jCn-19-M9i" secondAttribute="trailing" id="yev-q4-mfd"/>
+                            <constraint firstAttribute="trailing" secondItem="wvu-ax-TS2" secondAttribute="trailing" constant="20" id="ufi-bG-tIW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KL9-J3-iLI">
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="categoryButton" destination="wJx-Ee-O3f" id="mqI-NJ-2eG"/>
-                        <outlet property="headerContainer" destination="jCn-19-M9i" id="Rre-Ot-ckK"/>
-                        <outlet property="headerContainerTopConstraint" destination="juw-lV-all" id="wWH-Cd-fR6"/>
+                        <outlet property="filterButton" destination="wvu-ax-TS2" id="6Wd-mP-VLq"/>
                         <outlet property="tableView" destination="CBL-js-qdj" id="Pu0-Aj-e2P"/>
-                        <segue destination="jA8-wg-Yqr" kind="popoverPresentation" identifier="category" popoverAnchorView="wJx-Ee-O3f" id="Ju3-X6-vfz">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
-                        </segue>
                         <segue destination="831-T6-e6P" kind="show" identifier="listingDetail" id="6k7-Tm-d3K"/>
+                        <segue destination="jA8-wg-Yqr" kind="popoverPresentation" identifier="category" popoverAnchorView="wvu-ax-TS2" id="m78-On-xPs">
+                            <popoverArrowDirection key="popoverArrowDirection" down="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ft-yS-wmS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -103,7 +92,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SwC-fK-Pxy">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.94737410545349121" green="0.96368885040283203" blue="0.97424221038818359" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtQ-Bm-9Qp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
@@ -120,19 +109,18 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WCo-kA-pOo">
-                                <rect key="frame" x="8" y="25" width="32" height="32"/>
+                                <rect key="frame" x="4" y="25" width="32" height="32"/>
                                 <state key="normal" image="arrowLeft.png"/>
                                 <connections>
                                     <action selector="onBackPressed:" destination="831-T6-e6P" eventType="touchUpInside" id="ywz-KZ-5Wp"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qtQ-Bm-9Qp" firstAttribute="leading" secondItem="1QS-3c-Dgh" secondAttribute="leading" id="2Tn-Gb-eZa"/>
                             <constraint firstItem="SwC-fK-Pxy" firstAttribute="leading" secondItem="1QS-3c-Dgh" secondAttribute="leading" id="ENv-NG-bBt"/>
                             <constraint firstAttribute="trailing" secondItem="SwC-fK-Pxy" secondAttribute="trailing" id="I1M-d5-EGe"/>
-                            <constraint firstItem="WCo-kA-pOo" firstAttribute="leading" secondItem="1QS-3c-Dgh" secondAttribute="leading" constant="8" id="PuR-E2-QYe"/>
+                            <constraint firstItem="WCo-kA-pOo" firstAttribute="leading" secondItem="1QS-3c-Dgh" secondAttribute="leading" constant="4" id="PuR-E2-QYe"/>
                             <constraint firstAttribute="trailing" secondItem="Q5U-EQ-841" secondAttribute="trailing" id="Q9o-I6-2xy"/>
                             <constraint firstItem="SwC-fK-Pxy" firstAttribute="top" secondItem="1QS-3c-Dgh" secondAttribute="top" id="SCg-v2-5Yh"/>
                             <constraint firstItem="rSI-RA-sLt" firstAttribute="top" secondItem="SwC-fK-Pxy" secondAttribute="bottom" id="jn7-p7-8nr"/>
@@ -212,6 +200,6 @@
     </scenes>
     <resources>
         <image name="arrowLeft.png" width="32" height="32"/>
-        <image name="filter.png" width="16" height="16"/>
+        <image name="filter2.png" width="38" height="38"/>
     </resources>
 </document>

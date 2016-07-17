@@ -15,11 +15,11 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AsU-dD-p4e">
-                        <rect key="frame" x="8" y="0.0" width="304" height="20"/>
+                        <rect key="frame" x="12" y="0.0" width="296" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="qyK-ja-p2b"/>
+                            <constraint firstAttribute="height" constant="22" id="qyK-ja-p2b"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.33000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -27,8 +27,8 @@
                 <constraints>
                     <constraint firstItem="AsU-dD-p4e" firstAttribute="top" secondItem="MBZ-dL-lMb" secondAttribute="top" id="Cji-zm-kzZ"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="AsU-dD-p4e" secondAttribute="bottom" id="FSS-Qc-ebb"/>
-                    <constraint firstAttribute="trailing" secondItem="AsU-dD-p4e" secondAttribute="trailing" constant="8" id="cwp-YO-uIL"/>
-                    <constraint firstItem="AsU-dD-p4e" firstAttribute="leading" secondItem="MBZ-dL-lMb" secondAttribute="leading" constant="8" id="xEF-8k-wJw"/>
+                    <constraint firstAttribute="trailing" secondItem="AsU-dD-p4e" secondAttribute="trailing" constant="12" id="cwp-YO-uIL"/>
+                    <constraint firstItem="AsU-dD-p4e" firstAttribute="leading" secondItem="MBZ-dL-lMb" secondAttribute="leading" constant="12" id="xEF-8k-wJw"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
