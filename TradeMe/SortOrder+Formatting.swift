@@ -8,8 +8,10 @@
 
 import Foundation
 
-// WIP
+// WIP Need to get metadata to determine which sorting applies for each category, 
+// Not in scope for now
 extension SortOrder {
+    // Format Sort order
     func format() -> String {
         switch self {
         case .FeaturedFirst:

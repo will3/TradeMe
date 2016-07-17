@@ -16,18 +16,22 @@ enum TradeMeApiError: ErrorType {
     case BadData
 }
 
-//        Authorization: OAuth oauth_consumer_key="<consumer-key>", oauth_signature_method="PLAINTEXT", oauth_signature="<consumer-secret>&"
-
+/**
+ Api wrapper for TradeMe
+ */
 class TradeMeApi {
     static let categoryRootNumber = "0"
     
-    var hostUrl = NSURL(string: "https://api.tmsandbox.co.nz/v1")!
+    init(hostUrl: NSURL) {
+        self.hostUrl = hostUrl
+    }
     
-    var headers = [
-        "Authorization":
-        "OAuth oauth_consumer_key=\"A1AC63F0332A131A78FAC304D007E7D1\", oauth_token=\"645502DDB8CBF1383DC24A8A36249B35\", oauth_signature_method=\"PLAINTEXT\", oauth_signature=\"EC7F18B17A062962C6930A8AE88B16C7&922FBF1A2586D04E0DEB3AECDC9569C3\""
-    ]
+    var hostUrl: NSURL
+    var headers: [String: String]?
     
+    /**
+     Get category
+     */
     func getCategory(request: GetCategoryRequest = GetCategoryRequest()) -> Promise<Category> {
         let url = hostUrl.URLByAppendingPathComponent("Categories/\(request.number).\(request.fileFormat)")
         
@@ -48,6 +52,9 @@ class TradeMeApi {
         }
     }
     
+    /**
+     Search
+     */
     func search(request: SearchRequest = SearchRequest()) -> Promise<SearchResponse> {
         let url = hostUrl.URLByAppendingPathComponent("Search/General.json")
         
@@ -68,6 +75,9 @@ class TradeMeApi {
         }
     }
     
+    /**
+     Get listing detail
+     */
     func getListingDetail(request: GetListingDetailRequest = GetListingDetailRequest()) -> Promise<ListedItemDetail> {
         let url = hostUrl.URLByAppendingPathComponent("Listings/\(request.listingId).\(request.file_format)")
         

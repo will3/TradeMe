@@ -9,6 +9,7 @@
 import Foundation
 import ObjectMapper
 
+// Transforms a date string with format "yyyy-MM-dd'T'HH:mm:ss'Z'"
 class StandardDateTransform: TransformType {
     static let dateFormatter: NSDateFormatter = {
         let dateFormatter = NSDateFormatter()

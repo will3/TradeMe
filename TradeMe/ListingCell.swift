@@ -29,24 +29,31 @@ class ListingCell: UITableViewCell {
 
 extension ListingCell {
     func drawListing(listing: Listing, currencyFormat: NSNumberFormatter) {
+        
+        // Draw location
         locationLabel.text = listing.region
+        
+        // Draw end date
         if let endDate = listing.endDate {
             timeLabel.text = ListingDateFormatter.formatEndDate(endDate)
         } else {
             timeLabel.text = ""
         }
         
+        // Draw title
         descriptionLabel.text = listing.title
         
+        // Draw Bidding
         priceLabel.text = listing.priceDisplay
-        reserveLabel.text = ReserveStateFormatter.format(listing.reserveState)
+        reserveLabel.text = listing.formatReserveState()
         
+        // Draw Buy now
         buyNowLabel.text = listing.hasBuyNow ? NSLocalizedString("Buy Now", comment: "") : ""
         buyNowPriceLabel.text = listing.hasBuyNow ?
             "\(currencyFormat.stringFromNumber(listing.buyNowPrice) ?? "")" :
             ""
         
-        // Update image
+        // Draw image
         if listing.pictureHref.isEmpty {
             posterWidthConstraint.constant = 0
             posterImageView.hidden = true
@@ -64,6 +71,7 @@ extension ListingCell {
             }
         }
         
+        // Draw background colors
         backgroundColor = listing.isFeatured ? Colors.featuredBackground : Colors.normalBackground
     }
 }

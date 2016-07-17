@@ -30,6 +30,8 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     // Listing table controller
     var listingTableController: ListingTableController!
     
+    // MARK: Properties
+    
     // Search bar shown
     var searchBar = UISearchBar()
     // Page size
@@ -41,6 +43,15 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     // List shown
     var list = [Listing]()
     
+    // Total count of listings
+    private var totalCount = 0
+    
+    private var canLoadMore: Bool {
+        return page * pageSize < totalCount
+    }
+    
+    private let refreshControl = UIRefreshControl()
+    
     // Throttle used to limit number of api calls down by changing the search bar text
     var searchBarTextThrottle = Throttle<String>()
     
@@ -50,6 +61,8 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     private var viewExpanded = false
     // Flag for keyboard shown
     private var keyboardShown = false
+    // Flag for loading more
+    private var loadingMore = false
     
     // MARK: UIViewController
     
@@ -62,17 +75,32 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         listingTableController.hookTableView(tableView)
         listingTableController.delegate = self
         
+        // Set up scroll view events
         listingTableController.scrollViewTracker
-            // Collapse view when scrolling up
-            .onScrollUp { scrollView in
+            .on(.SwipeUp) { _ in
+                // Collapse view when swipe up
                 if !self.keyboardShown && self.viewExpanded {
                     self.collapseView()
                 }
             }
-            // Expand view when scrolling down
-            .onScrollDown { scrollView in
+            .on(.SwipeDown) { _ in
+                // Expand view when swipe down
                 if !self.keyboardShown && !self.viewExpanded {
                     self.expandView()
+                }
+            }
+            .on(.BounceTop) { _ in
+                // Collapse view when bounce top
+                if !self.keyboardShown && self.viewExpanded {
+                    self.collapseView()
+                }
+            }
+            .on(.BounceBottom) { _ in
+                if self.canLoadMore && !self.loadingMore {
+                    self.loadingMore = true
+                    self.loadMore() {
+                        self.loadingMore = false
+                    }
                 }
         }
         
@@ -93,6 +121,11 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         searchBarTextThrottle.next { searchText in
             self.updateList()
         }
+        
+        StatusBar.setBackgroundColor(Colors.primary)
+        
+        tableView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(HomeViewController.onRefreshControl), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -147,6 +180,19 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
             presentViewController(categoryPopup, animated: true) { }
         } else {
             performSegueWithIdentifier(Segues.category, sender: nil)
+        }
+    }
+    
+    // MARK: Refresh control events
+    
+    func onRefreshControl() {
+        listingTableController.scrollViewTracker.lock(true)
+        updateList() {
+            self.refreshControl.endRefreshing()
+            // Gets around an issue when offset is tracked incorrectly when refresh control is minimized
+            delay(1.0) {
+                self.listingTableController.scrollViewTracker.lock(false)
+            }
         }
     }
     
@@ -233,18 +279,61 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         }
     }
     
-    private func updateList() {
+    private func updateList(completion: (() -> Void)? = nil) {
+        // Reset page
+        page = 1
+        
+        let request = buildRequest()
+        listingService.search(request).then { result -> Void in
+            self.totalCount = result.totalCount
+            self.list = result.list
+            self.listingTableController.reloadData(self.tableView, list: result.list)
+            completion?()
+        }
+    }
+    
+    private func loadMore(completion: () -> Void) {
+        page += 1
+        
+        let request = buildRequest()
+        
+        listingTableController.showLoading(true)
+        let start = NSDate()
+        // Api is too fast, set a min loading time
+        let minLoadingTime = 1000.0
+        listingService.search(request).then { result -> Void in
+            let end = NSDate()
+            let timeTaken = end.timeIntervalSinceDate(start)
+            var diff = minLoadingTime - timeTaken
+            if diff < 0 { diff = 0 }
+            
+            // Delay so loading time is at least 1 sec
+            delay(diff / 1000.0) {
+                
+                // Get around an issue where offset is tracked incorrectly when new listings are inserted
+                self.listingTableController.scrollViewTracker.lock(true)
+                
+                self.listingTableController
+                    .showLoading(false)
+                    .loadMore(self.tableView, list: result.list)
+                
+                // No offsets tracked for 1 sec
+                delay(1.0) {
+                    self.listingTableController.scrollViewTracker.lock(false)
+                }
+                completion()
+            }
+        }
+    }
+    
+    private func buildRequest() -> SearchRequest {
         let request = SearchRequest()
         request.search_string = searchBar.text
         request.category = category?.number
         request.page = page
         request.rows = pageSize
         request.photo_size = PhotoSize.Medium
-        
-        listingService.search(request).then { result -> Void in
-            self.list = result.list
-            self.listingTableController.reloadData(self.tableView, list: result.list)
-        }
+        return request
     }
     
     private func configurePopover(popover: UIViewController) {

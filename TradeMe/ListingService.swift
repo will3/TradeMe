@@ -9,32 +9,36 @@
 import Foundation
 import PromiseKit
 
-class Cache {
-    var categoryMap = [String: Category]()
-    
-    func getCategory(number: String) -> Category? {
-        return categoryMap[number]
-    }
-    
-    func setCategory(number: String, category: Category) {
-        categoryMap[number] = category
-    }
-}
-
+/**
+ Service for retrieving categories, listings and listing details
+ */
 class ListingService: NSObject {
-    var api = TradeMeApi()
-    var promiseManager = PromiseManager()
-    var cache = Cache()
+    var api: TradeMeApi
+    var cache: Cache
+    var promiseManager: PromiseManager
     
+    init(api: TradeMeApi, cache: Cache, promiseManager: PromiseManager) {
+        self.api = api
+        self.cache = cache
+        self.promiseManager = promiseManager
+    }
+    
+    // Sepcial categories, names are replaced
     var specialCategories = [
         "Trade Me Motors": "Motors",
         "Trade Me Property": "Property",
         "Trade Me Jobs": "Jobs"
     ]
     
+    /**
+     Get category
+     
+     - parameter number: category number, leave empty for root category
+     - returns: promise of Category
+     */
     func getCategory(number: String?) -> Promise<Category> {
+        let isRoot = number == nil
         let number = number ?? TradeMeApi.categoryRootNumber
-        let isRoot = number == TradeMeApi.categoryRootNumber
         
         let key = "getCategories" + number
         
@@ -51,7 +55,7 @@ class ListingService: NSObject {
             Promise(cachedCategory!) :
             // Resolve with async task
             promiseManager
-                .dequeue(key) {
+                .get(key) {
                     return self.api.getCategory(request) }
                 .then { category in
                     self.transformCategory(category, specialCategories: self.specialCategories)
@@ -61,16 +65,32 @@ class ListingService: NSObject {
         }
     }
     
+    /**
+     Search
+     
+     - parameter request: request object
+     - returns: promise of SearchResponse
+     */
     func search(request: SearchRequest = SearchRequest()) -> Promise<SearchResponse> {
         return api.search(request)
     }
     
+    /**
+     Get listing detail
+     
+     - parameter request: request object
+     - returns: promise of ListedItemDetail
+     */
     func getListingDetail(request: GetListingDetailRequest) -> Promise<ListedItemDetail> {
         return api.getListingDetail(request)
     }
     
     // MARK: Private
     
+    /**
+     Transform category recursively,
+     replacing special category names
+     */
     private func transformCategory(category: Category, specialCategories: [String: String]) {
         category.name = specialCategories[category.name] ?? category.name
         

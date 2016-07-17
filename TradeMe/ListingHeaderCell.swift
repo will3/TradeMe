@@ -19,6 +19,6 @@ extension ListingHeaderCell {
     func drawListingDetail(listingDetail: ListedItemDetail) {
         titleLabel.text = listingDetail.title
         priceLabel.text = listingDetail.priceDisplay
-        reserveLabel.text = ReserveStateFormatter.format(listingDetail.reserveState)
+        reserveLabel.text = listingDetail.formatReserveState()
     }
 }

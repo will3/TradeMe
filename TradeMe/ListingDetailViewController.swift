@@ -10,19 +10,12 @@ import Foundation
 import UIKit
 import AppInjector
 
-struct ListingDetailRow {
-    var title = ""
-    var detail = ""
-    
-    init(title: String, detail: String) {
-        self.title = title
-        self.detail = detail
-    }
-}
-
+/**
+ Shows listing details
+ */
 class ListingDetailViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    private enum Sections : Int {
+    enum Sections : Int {
         case Poster = 0
         case Header = 1
         case DetailHeader = 2
@@ -30,17 +23,29 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
         case Footer = 4
     }
     
+    // MARK: Outlets
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topBar: UIView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var backButton2: UIButton!
     
-    let titleLabel = UILabel()
+    // MARK: Properties
     
+    // Listing to show
     var listing: Listing?
-    var listingDetail: ListedItemDetail?
-    private var detailRows = [ListingDetailRow]()
     
-    var posterCell: ListingPosterCell?
+    // Title label in nav bar
+    private let titleLabel = UILabel()
+    
+    // Listing detail fetched
+    private var listingDetail: ListedItemDetail?
+    
+    // Rows in Sections.Details
+    private var details = [ListingDetail]()
+    
+    // Reference to ListingPosterCell drawn
+    private var posterCell: ListingPosterCell?
     
     // MARK: Injected
     
@@ -51,75 +56,39 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        
         Injector.defaultInjector.injectDependencies(self)
         
-        tableView.registerCells([CellIdentifiers.listingHeaderCell, CellIdentifiers.listingDetailCell, CellIdentifiers.headerCell, CellIdentifiers.listingPosterCell, CellIdentifiers.listingFooterCell])
+        // Configure table view
+        tableView.registerNibs([CellIdentifiers.listingHeaderCell, CellIdentifiers.listingDetailCell, CellIdentifiers.headerCell, CellIdentifiers.listingPosterCell, CellIdentifiers.listingFooterCell])
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 24.0
         
         if let listing = listing {
+            // Merge listing detail using ObjectMapper
             listingDetail = ListedItemDetail(JSON: listing.toJSON())
             
             let request = GetListingDetailRequest()
             request.listingId = listing.listingId
+            
             listingService.getListingDetail(request).then { listingDetail -> Void in
                 self.listingDetail = listingDetail
-                self.detailRows = self.getDetailRows(listingDetail)
+                self.details = listingDetail.getDetails()
                 self.tableView.reloadData()
+                
                 self.titleLabel.text = listingDetail.title
             }
         }
         
+        // Configure title label
         topBar.addSubview(titleLabel)
         titleLabel.textAlignment = NSTextAlignment.Center
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
-    func updateTitleLabelFrame(y: CGFloat?) {
-        let y = y ?? topBar.bounds.height
-        let titleLeftPadding = CGFloat(60.0)
-        let titleRightPadding = CGFloat(60.0)
-        titleLabel.frame = CGRectMake(titleLeftPadding, y, topBar.bounds.width - titleLeftPadding - titleRightPadding, topBar.bounds.height)
-    }
-    
-    private func getDetailRows(listingDetail: ListedItemDetail) -> [ListingDetailRow] {
-        var list = [ListingDetailRow]()
         
-        list.append(ListingDetailRow(
-            title: NSLocalizedString("Condition", comment: ""),
-            detail: listingDetail.formatCondition())
-        )
-        
-        if !listingDetail.body.isEmpty {
-            list.append(ListingDetailRow(
-                title: NSLocalizedString("Description", comment: ""),
-                detail: listingDetail.body))
-        }
-        
-        if listingDetail.shippingOptions.count > 0 {
-            list.append(ListingDetailRow(
-                title: NSLocalizedString("Shipping", comment: ""),
-                detail: listingDetail.formatShippingOptions()))
-        }
-        
-        if !listingDetail.paymentOptions.isEmpty {
-            list.append(ListingDetailRow(
-                title: NSLocalizedString("Payment", comment: ""),
-                detail: listingDetail.formatPaymentOptions()))
-        }
-        
-        list.append(ListingDetailRow(
-            title: NSLocalizedString("Pickups", comment: ""),
-            detail: listingDetail.formatPickups()))
-        
-        return list
+        // Add a shadow line
+        var params = SeperatorParams.across
+        params.color = Colors.secondary
+        topBar.addSeparator(params)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -127,6 +96,8 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
         
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
+    
+    // MARK: IBAction
     
     @IBAction func onBackPressed(sender: UIButton) {
         navigationController?.popViewControllerAnimated(true)
@@ -149,7 +120,7 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
         case .DetailHeader:
             return 1
         case .Details:
-            return detailRows.count
+            return details.count
         case .Footer:
             return 1
         }
@@ -174,22 +145,26 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
             }
             posterCell.drawListingDetail(listingDetail)
             self.posterCell = posterCell
+            
         case .Header:
             guard let headerCell = cell as? ListingHeaderCell else {
                 fatalError(FatalErrors.wrongCellType(ListingHeaderCell.self, actual: cell))
             }
             headerCell.drawListingDetail(listingDetail)
+            
         case .DetailHeader:
             guard let headerCell = cell as? HeaderCell else {
                 fatalError(FatalErrors.wrongCellType(ListingHeaderCell.self, actual: cell))
             }
             headerCell.titleLabel.text = NSLocalizedString("DETAILS", comment: "")
+            
         case .Details:
             guard let detailCell = cell as? ListingDetailCell else {
                 fatalError(FatalErrors.wrongCellType(ListingDetailCell.self, actual: cell))
             }
-            let row = detailRows[indexPath.row]
-            detailCell.drawListingDetailRow(row)
+            let row = details[indexPath.row]
+            detailCell.drawListingDetail(row)
+            
         case .Footer:
             guard let footerCell = cell as? ListingFooterCell else {
                 fatalError(FatalErrors.wrongCellType(ListingFooterCell.self, actual: cell))
@@ -234,7 +209,9 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
         let maxY = Layout.listingDetailHeaderHeight - Layout.navBarHeight - Layout.statusBarHeight
         let ratio = 1 - ((maxY - y) / maxY)
         
-        self.posterCell?.overlayView.alpha = ratio
+        posterCell?.overlayView.alpha = ratio
+        backButton.alpha = 1 - ratio
+        backButton2.alpha = ratio
         
         topBar.hidden = ratio < 1.0
         
@@ -277,5 +254,12 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
         default:
             return UIColor.clearColor()
         }
+    }
+
+    private func updateTitleLabelFrame(y: CGFloat?) {
+        let y = y ?? topBar.bounds.height
+        let titleLeftPadding = CGFloat(60.0)
+        let titleRightPadding = CGFloat(60.0)
+        titleLabel.frame = CGRectMake(titleLeftPadding, y, topBar.bounds.width - titleLeftPadding - titleRightPadding, topBar.bounds.height)
     }
 }

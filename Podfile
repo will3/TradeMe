@@ -11,8 +11,8 @@ target 'TradeMe' do
   pod 'AlamofireObjectMapper', '~> 3.0'
   pod 'PromiseKit', '~> 3.2.0'
   pod 'SnapKit', '~> 0.21.1'
-  pod 'AppInjector', '~> 0.0.2'
   pod 'KFSwiftImageLoader', '~> 2.0'
+  pod 'AppInjector'
 
   target 'TradeMeTests' do
     inherit! :search_paths

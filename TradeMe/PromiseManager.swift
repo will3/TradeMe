@@ -9,10 +9,14 @@
 import Foundation
 import PromiseKit
 
-class PromiseManager {
-    var inProgress = [String: Any]()
+/**
+ Solve issue of same call fired multiple times,
+ Promise manager consolidate same requests to one call, and fire multiple 'then' blocks when it finishes
+ */
+class PromiseManager: NSObject {
+    private var inProgress = [String: Any]()
     
-    func dequeue<T>(key: String, promiseFactory: (() -> Promise<T>)) -> Promise<T> {
+    func get<T>(key: String, promiseFactory: (() -> Promise<T>)) -> Promise<T> {
         if inProgress[key] != nil {
             if let promise = inProgress[key] as? Promise<T> {
                 return promise
@@ -24,7 +28,7 @@ class PromiseManager {
         let promise = promiseFactory()
         inProgress[key] = promise
         
-        // Remove promise from queue
+        // Remove promise from inProgress, eventually
         promise.always {
             self.inProgress[key] = nil
         }

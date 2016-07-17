@@ -9,6 +9,10 @@
 import Foundation
 import ObjectMapper
 
+/**
+ Workaround for ObjectMapper mapping boolean true to 1,
+ Which doesn't work as intended for URL parameter encoding
+ */
 class BoolTransform: TransformType {
     typealias Object = Bool
     typealias JSON = String

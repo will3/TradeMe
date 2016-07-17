@@ -8,35 +8,56 @@
 //
 
 import UIKit
+import AppInjector
 
+// CategoryViewController Events
 protocol CategoryViewControllerDelegate: class {
+    // Called when a category is chosen
     func didChooseCategory(category: Category, viewController: CategoryViewController)
+    // Called when view is finished
     func didFinishChoosingCategory(viewController: CategoryViewController)
 }
 
 class CategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    // MARK: IBOutlet
+    
     @IBOutlet weak var tableView: UITableView!
     
-    var listingService = ListingService()
+    // MARK: Properties
+    
+    // Category shown
     var category: Category?
-    var filteredSubcategories = [Category]()
-    var titleView = CategoryTitleView().setupSubviews()
-    var loading = true
     
     weak var delegate: CategoryViewControllerDelegate?
+    
+    // Fitlered subcategories, only none 0 subcategories are shown
+    private var filteredSubcategories = [Category]()
+    
+    // Title view shown
+    private var titleView = CategoryTitleView().setupSubviews()
+    
+    // Flag for loading state
+    private var loading = true
+    
+    // MARK: Injected
+    
+    var listingService: ListingService!
     
     // MARK: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.registerCells([CellIdentifiers.categoryCell, CellIdentifiers.loadingCell])
+        Injector.defaultInjector.injectDependencies(self)
         
-        let number = category?.number
+        // Configure table view
+        tableView.registerNibs([CellIdentifiers.categoryCell, CellIdentifiers.loadingCell])
         
         showLoading(true)
+        let number = category?.number
         listingService.getCategory(number).then { category -> Void in
+            // Hide loading
             self.showLoading(false)
             self.category = category
             self.filteredSubcategories = category.subcategories.filter { $0.count > 0 }
@@ -56,7 +77,7 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
             return
         }
         
-        // Center
+        // Navigation item center
         navigationController?.setNavigationBarHidden(false, animated: false)
         titleView.frame = CGRectMake(0, 0, 200.0, 40.0)
         navigationItem.titleView = titleView
@@ -64,7 +85,7 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         titleView.titleLabel.text = category?.name
         updateDetailLabel()
         
-        // Right
+        // Navigation item right
         let doneButton = UIBarButtonItem(
             title: NSLocalizedString("Done", comment: ""),
             style: UIBarButtonItemStyle.Plain,
@@ -80,29 +101,11 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func onDonePressed() {
         if let category = category {
             delegate?.didChooseCategory(category, viewController: self)
             delegate?.didFinishChoosingCategory(self)
         }
-    }
-    
-    func showLoading(flag: Bool) -> Self {
-        loading = flag
-        updateDetailLabel()
-        return self
-    }
-    
-    func updateDetailLabel() {
-        let format = NSLocalizedString("%li listings", comment: "")
-        titleView.detailLabel.text = loading ?
-            NSLocalizedString("Loading...", comment: "") :
-            String(format: format, category?.count ?? 0)
     }
     
     // MARK: UITableViewDataSource
@@ -167,6 +170,21 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 42.0
+    }
+    
+    // MARK: Private 
+    
+    func showLoading(flag: Bool) -> Self {
+        loading = flag
+        updateDetailLabel()
+        return self
+    }
+    
+    func updateDetailLabel() {
+        let format = NSLocalizedString("%li listings", comment: "")
+        titleView.detailLabel.text = loading ?
+            NSLocalizedString("Loading...", comment: "") :
+            String(format: format, category?.count ?? 0)
     }
 }
 

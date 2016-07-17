@@ -51,7 +51,6 @@ class FatalErrors {
 class Layout {
     static let listingPosterWidth = CGFloat(100.0)
     static let listingPosterHeight = CGFloat(100.0)
-    static let homeHeaderContainerHeight = CGFloat(42.0)
     static let listingDetailHeaderHeight = CGFloat(200.0)
     static let navBarHeight = CGFloat(42.0)
     static let statusBarHeight = CGFloat(20.0)

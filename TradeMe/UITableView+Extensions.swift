@@ -10,8 +10,16 @@ import Foundation
 import UIKit
 
 extension UITableView {
-    func registerCells(cellIdentifiers: [CellIdentifiers]) {
-        cellIdentifiers.forEach { cellIdentifier in
+    
+    /**
+     Helper function to register nibs
+     
+     Assume nib name and cell identifier are the same
+     
+     - parameter identifiers: identifiers to register
+     */
+    func registerNibs(identifiers: [CellIdentifiers]) {
+        identifiers.forEach { cellIdentifier in
             self.registerNib(
                 UINib(nibName: cellIdentifier.rawValue, bundle: NSBundle.mainBundle()),
                 forCellReuseIdentifier: cellIdentifier.rawValue)

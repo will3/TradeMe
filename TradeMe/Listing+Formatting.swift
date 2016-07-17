@@ -10,18 +10,37 @@ import Foundation
 import UIKit
 
 extension Listing {
+    // Format |isNew
     func formatCondition() -> String {
         return isNew ?
             NSLocalizedString("New", comment: "") :
             NSLocalizedString("Used", comment: "")
     }
+    
+    // Format |reserveState
+    func formatReserveState() -> String {
+        switch reserveState {
+        case .None:
+            return NSLocalizedString("No reserve", comment: "")
+        case .Met:
+            return NSLocalizedString("Reserve met", comment: "")
+        case .NotMet:
+            return NSLocalizedString("Reserve not met", comment: "")
+        case .NotApplicable:
+            return ""
+        }
+    }
 }
 
+typealias ListingDetail = (title: String, detail: String)
+
 extension ListedItemDetail {
+    // Format |shippingOptions
     func formatShippingOptions() -> String {
         return shippingOptions.map { $0.method }.joinWithSeparator("\n")
     }
     
+    // Format |paymentOptions
     func formatPaymentOptions() -> String {
         return paymentOptions
             .componentsSeparatedByString(",")
@@ -29,6 +48,7 @@ extension ListedItemDetail {
             .joinWithSeparator("\n")
     }
     
+    // Format |allowsPickups
     func formatPickups() -> String {
         switch allowsPickups {
         case .None:
@@ -40,5 +60,43 @@ extension ListedItemDetail {
         case .Forbid:
             return NSLocalizedString("None", comment: "")
         }
+    }
+    
+    /**
+     Format a list of details
+     
+     - returns: list of (title, detail)
+     */
+    func getDetails() -> [ListingDetail] {
+        var list = [ListingDetail]()
+        
+        list.append((
+            title: NSLocalizedString("Condition", comment: ""),
+            detail: formatCondition())
+        )
+        
+        if !body.isEmpty {
+            list.append((
+                title: NSLocalizedString("Description", comment: ""),
+                detail: body))
+        }
+        
+        if shippingOptions.count > 0 {
+            list.append((
+                title: NSLocalizedString("Shipping", comment: ""),
+                detail: formatShippingOptions()))
+        }
+        
+        if !paymentOptions.isEmpty {
+            list.append((
+                title: NSLocalizedString("Payment", comment: ""),
+                detail: formatPaymentOptions()))
+        }
+        
+        list.append((
+            title: NSLocalizedString("Pickups", comment: ""),
+            detail: formatPickups()))
+        
+        return list
     }
 }

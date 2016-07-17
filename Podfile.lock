@@ -31,7 +31,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.4)
   - AlamofireObjectMapper (~> 3.0)
-  - AppInjector (~> 0.0.2)
+  - AppInjector
   - KFSwiftImageLoader (~> 2.0)
   - Nimble
   - PromiseKit (~> 3.2.0)
@@ -48,6 +48,6 @@ SPEC CHECKSUMS:
   PromiseKit: 1db024241265f428137a9f3c00ff9590740c4be6
   SnapKit: bbad04cb016c7cead63965f16b00c09318d271ee
 
-PODFILE CHECKSUM: 582d0ec58124f3a827e95a9c298829721e2496bc
+PODFILE CHECKSUM: 4da7eeeab4989f46d1a8d89395604ec429db6904
 
 COCOAPODS: 1.0.0

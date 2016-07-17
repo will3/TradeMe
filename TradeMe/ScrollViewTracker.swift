@@ -9,52 +9,117 @@
 import Foundation
 import UIKit
 
+/**
+ ScrollView Events
+ */
+enum ScrollViewEvents {
+    // Nothing interesting happening
+    case Default
+    // User seems to be swiping up
+    case SwipeUp
+    // User seems to be swiping down
+    case SwipeDown
+    // Scroll view bounced from top
+    case BounceTop
+    // Scroll view bounced from bottom
+    case BounceBottom
+}
+
+/**
+ Track scroll view for advance events
+ */
 class ScrollViewTracker {
     
-    var lastY = CGFloat(0.0)
-    var runningSpeed = CGFloat(0.0)
-    var runningSpeedDamping = CGFloat(0.8)
-    var maxSpeed = CGFloat(12.0)
-    var minSpeed = CGFloat(-12.0)
+    typealias Listener = ((UIScrollView) -> Void)
     
-    var didScrollUp: ((UIScrollView) -> Void)?
-    var didScrollDown: ((UIScrollView) -> Void)?
+    // Max speed for "swipe up"
+    var maxSpeed = CGFloat(24.0)
     
-    func onScrollUp(block: ((UIScrollView) -> Void)) -> Self {
-        didScrollUp = block
+    // Min speed for "swipe down"
+    var minSpeed = CGFloat(-24.0)
+    
+    // Last y
+    private var lastY = CGFloat(0.0)
+    
+    // Running speed
+    private var runningSpeed = CGFloat(0.0)
+    
+    // Damping for running speed
+    private var runningSpeedDamping = CGFloat(0.5)
+    
+    // Listenrs by events
+    private var listeners = [ScrollViewEvents: Listener]()
+    
+    private var locked = false
+    
+    /**
+     Sets a listener for scroll view event
+     
+     Note only one listener can be attached for each event type
+     
+     - parameter event: event to listen to
+     - parameter block: listener
+     - returns: self for chainability
+     */
+    func on(event: ScrollViewEvents, block: Listener) -> Self {
+        listeners[event] = block
         return self
     }
     
-    func onScrollDown(block: ((UIScrollView) -> Void)) -> Self {
-        didScrollDown = block
-        return self
+    /**
+     Lock tracking
+     
+     All scrolling will be ignored
+     
+     - parameter flag: false to unlock
+     */
+    func lock(flag: Bool) {
+        locked = flag
     }
     
+    /**
+     This method should be called at UIScrollViewDelegate.scrollViewDidScroll to forward that event
+     
+     - parameter scrollView: scroll view to track
+     */
     func forwardScrollViewDidScroll(scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
         
-        if y < 0 ||
-            y > scrollView.contentSize.height - scrollView.frame.height{
-            // Ignore bouncing from top / bottom edges
+        if locked {
             lastY = y
             return
         }
         
-        let diff = lastY - y
+        let speed = lastY - y
         
-        runningSpeed += diff
+        if y < 0 {
+            next(event: .BounceTop, scrollView: scrollView)
+            lastY = y
+            return
+        }
+        
+        if y > scrollView.contentSize.height - scrollView.frame.height {
+            next(event: .BounceBottom, scrollView: scrollView)
+            lastY = y
+            return
+        }
+        
+        runningSpeed += speed
         runningSpeed *= runningSpeedDamping
         
         lastY = y
         
         if runningSpeed > maxSpeed {
-            if didScrollUp != nil {
-                didScrollUp!(scrollView)
-            }
+            next(event: .SwipeUp, scrollView: scrollView)
         } else if runningSpeed < minSpeed {
-            if didScrollDown != nil {
-                didScrollDown!(scrollView)
-            }
+            next(event: .SwipeDown, scrollView: scrollView)
+        } else {
+            next(event: .Default, scrollView: scrollView)
         }
+    }
+    
+    private func next(event event: ScrollViewEvents, scrollView: UIScrollView) {
+        // Notify
+        listeners[event]?(scrollView)
     }
 }

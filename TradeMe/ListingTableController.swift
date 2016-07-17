@@ -32,10 +32,11 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
     enum Sections: Int {
         case Status = 0
         case List = 1
+        case Loading = 2
     }
     
     // Currency format
-    var currencyFormat: NSNumberFormatter!
+    var currencyFormat: NSNumberFormatter
     
     // Scroll view tracker, for advanced scroll view events
     private(set) var scrollViewTracker = ScrollViewTracker()
@@ -49,7 +50,14 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
     // Listings shown, managed internally
     private var list = [Listing]()
     
+    // Reference to loading cell shown
+    private var loadingCell: LoadingCell?
+    
     // MARK: Public
+    
+    init(currencyFormat: NSNumberFormatter) {
+        self.currencyFormat = currencyFormat
+    }
     
     /**
      Configures a table view for use
@@ -58,7 +66,7 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
      - returns: self for chainability
      */
     func hookTableView(tableView: UITableView) -> ListingTableController {
-        tableView.registerCells([CellIdentifiers.listingCell, CellIdentifiers.emptyCell])
+        tableView.registerNibs([.listingCell, .emptyCell, .loadingCell])
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -68,7 +76,7 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
     }
     
     /**
-     Reload table view, using listings
+     Reload table using listings
      
      - parameter tableView: tableView to reload
      - parameter list: listings to show, if a 0 count list is passed, will show empty state
@@ -81,10 +89,46 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
         return self
     }
     
+    /**
+     Load table for more listings
+     
+     - parameter tableView: tableView to load
+     - parameter list: additional listings to insert
+     - returns: self for chainability
+     */
+    func loadMore(tableView: UITableView, list: [Listing]) -> Self {
+        let start = self.list.count
+        self.list.appendContentsOf(list)
+        
+        var indexPaths = [NSIndexPath]()
+        for i in 0..<list.count {
+            indexPaths.append(NSIndexPath(forRow: start + i, inSection: Sections.List.rawValue))
+        }
+        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
+        
+        return self
+    }
+    
+    /**
+     Show table view loading more listings
+     
+     - parameter flag: true for show, flase for hide
+     - returns: self for chainability
+     */
+    func showLoading(flag: Bool) -> Self {
+        if flag {
+            self.loadingCell?.spinner.startAnimating()
+        } else {
+            self.loadingCell?.spinner.stopAnimating()
+        }
+        
+        return self
+    }
+    
     // MARK: UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,6 +139,8 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
             return empty ? 1 : 0
         case Sections.List:
             return list.count
+        case Sections.Loading:
+            return 1
         }
     }
     
@@ -117,6 +163,9 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
             }
             let listing = list[indexPath.row]
             listingCell.drawListing(listing, currencyFormat: currencyFormat)
+        case .Loading:
+            self.loadingCell = cell as? LoadingCell
+            break
         }
         
         return cell
@@ -152,10 +201,12 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
         let sectionEnum = Sections(rawValue: indexPath.section)!
         
         switch sectionEnum {
-        case Sections.Status:
+        case .Status:
             return CellIdentifiers.emptyCell
-        case Sections.List:
+        case .List:
             return CellIdentifiers.listingCell
+        case .Loading:
+            return CellIdentifiers.loadingCell
         }
     }
 }

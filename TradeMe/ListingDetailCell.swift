@@ -15,7 +15,7 @@ class ListingDetailCell: UITableViewCell {
 }
 
 extension ListingDetailCell {
-    func drawListingDetailRow(row: ListingDetailRow) {
+    func drawListingDetail(row: ListingDetail) {
         titleLabel.text = row.title
         detailLabel.text = row.detail
     }
