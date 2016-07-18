@@ -4,7 +4,9 @@ Created for Trade Me iOS Developer technical test
 
 Documentation(All internal classes): [link]()
 
-[image1]() [image2]() [image3]()
+![image1](https://raw.githubusercontent.com/will3/TradeMe/master/preview1.gif)
+![image2](https://raw.githubusercontent.com/will3/TradeMe/master/preview2.gif)
+![image3](https://raw.githubusercontent.com/will3/TradeMe/master/preview3.gif)
 
 #### To Run
 
