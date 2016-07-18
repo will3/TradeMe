@@ -38,7 +38,7 @@ class ThrottleTests: XCTestCase {
     
     func test_signal_true_true() {
         var outputs = [String]()
-        let throttle = Throttle<String>(interval: 0.2).next { text in
+        let throttle = Throttle<String>(0.2).next { text in
             outputs.append(text)
         }
         
@@ -54,7 +54,7 @@ class ThrottleTests: XCTestCase {
     
     func test_signal_true_false_true() {
         var outputs = [String]()
-        let throttle = Throttle<String>(interval: 0.2).next { text in
+        let throttle = Throttle<String>(0.2).next { text in
             outputs.append(text)
         }
         

@@ -9,32 +9,45 @@
 import Foundation
 
 /**
- Throttle signals
+ Used to limit fequency of input, such as search bar typing
  */
 class Throttle<T>: NSObject {
-    // Output block
+    /// Output block
     var nextBlock: ((T) -> Void)?
     
-    // Last fire set to min date
+    /// Last fire set to min date
     var lastFired = NSDate(timeIntervalSinceReferenceDate: 0)
     
-    // Interval
+    /// Interval
     var interval = 0.2
     
-    // Scheduled timer
+    /// Scheduled timer
     private var scheduled: NSTimer?
     
-    // Value scheduled
+    /// Value scheduled
     private var scheduledValue: T?
     
-    // Fired date scheduled
+    /// Fired date scheduled
     private var scheduledDate: NSDate?
     
-    init(interval: Double = 0.2, start: NSDate? = nil) {
+    /**
+     Creates a throttle
+     
+     Example:
+     ```
+     let throttle = Throttle<String>(0.2).next { text in
+        // Do something with text
+     }
+     // "a" will fire next block straight away
+     throttle.input("a")
+     // "b" will fire after 0.2 seconds
+     throttle.input("b")
+     ```
+     
+     - parameter interval: min seconds between signals
+     */
+    init(_ interval: Double = 0.2) {
         self.interval = interval
-        if start != nil {
-            lastFired = start!
-        }
     }
     
     /**
