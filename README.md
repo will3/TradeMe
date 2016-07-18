@@ -8,16 +8,16 @@ Documentation(All internal classes): [link](https://will3.github.io/TradeMe/docs
 ![image2](https://raw.githubusercontent.com/will3/TradeMe/master/preview2.gif)
 ![image3](https://raw.githubusercontent.com/will3/TradeMe/master/preview3.gif)
 
-#### To Run
+### To Run
 
 First install dependencies using CocoaPods, cd to project root and run ```Pod install``` in terminal.  
 Open TradeMe.xcworkspace and run the TradeMe target.  
 Unit Tests can be run from the same target.
 
-#### UI Tests
+### UI Tests
 Run Target "TradeMeUITests" in test configuration
 
-#### Generate documentation:
+### Generate documentation:
 
 Documentations are generated from code comments using [jazzy](https://github.com/realm/jazzy)  
 Install jazzy, then run  
@@ -27,8 +27,8 @@ chmod 775 ./gendoc
 gendoc
 ```
 
-#### Overview
-Project architecture is good old MVC, I used [PromiseKit](http://promisekit.org/) extensively for async calls. Dependency Injection is done using [AppInjector](https://github.com/will3/AppInjector)
+### Overview
+Project architecture is good old MVC, I used [PromiseKit](http://promisekit.org/) extensively for async calls. Dependency Injection was done using [AppInjector](https://github.com/will3/AppInjector)
 
 I based the design off the existing Trade Me app, as an excercise to duplicate the look and feel.
 
@@ -40,7 +40,7 @@ Listings are updated as you type
 - Auto expand  
 View expands when user scroll down, similar to the Safari App
 
-UI Tests are written using the Page pattern. UI Automation details are encapsulated and exposed through a nice, chainable 'Page' interface, for e.g.
+UI Tests were written using the Page pattern where Automation details are encapsulated and exposed through a nice, chainable 'Page' interface, for e.g.
 
 ```swift
 HomePage(app)
@@ -52,6 +52,6 @@ HomePage(app)
 	.wait()
 ```
 
-If I had more time, I would build in authentication
+If I had more time, I would build in authentication, instead of using a generated header
 
 [link to cv](http://will3.github.io/cv)
