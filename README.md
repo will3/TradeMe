@@ -2,7 +2,7 @@
 
 Created for Trade Me iOS Developer technical test
 
-Documentation(All internal classes): [link]()
+Documentation(All internal classes): [link](https://will3.github.io/TradeMe/docs/)
 
 ![image1](https://raw.githubusercontent.com/will3/TradeMe/master/preview1.gif)
 ![image2](https://raw.githubusercontent.com/will3/TradeMe/master/preview2.gif)
@@ -19,7 +19,7 @@ Run Target "TradeMeUITests" in test configuration
 
 #### Generate documentation:
 
-Documentations are generated from code comments using [jazzy]()  
+Documentations are generated from code comments using [jazzy](https://github.com/realm/jazzy)  
 Install jazzy, then run  
 
 ```bash
@@ -28,7 +28,7 @@ gendoc
 ```
 
 #### Overview
-Project architecture is good old MVC, I used [PromiseKit]() extensively for async calls. Dependency Injection is done using [AppInjector]()
+Project architecture is good old MVC, I used [PromiseKit](http://promisekit.org/) extensively for async calls. Dependency Injection is done using [AppInjector](https://github.com/will3/AppInjector)
 
 I based the design off the existing Trade Me app, as an excercise to duplicate the look and feel.
 
@@ -40,9 +40,8 @@ Listings are updated as you type
 - Auto expand  
 View expands when user scroll down, similar to the Safari App
 
-Duplicating the API models manually was error-prone and tedius. If possible, I would add [OpenAPI]() on the server side and generate client side wrapper using [swagger-codegen](https://github.com/swagger-api/swagger-codegen)
-
 UI Tests are written using the Page pattern. UI Automation details are encapsulated and exposed through a nice, chainable 'Page' interface, for e.g.
+
 ```swift
 HomePage(app)
 	.showCategoryPage()
@@ -52,9 +51,7 @@ HomePage(app)
 	.select(listingAtIndex: 0)
 	.wait()
 ```
-preview:  
-[image]()
 
-If I had more time, I would build in authentication (instead of hard coding headers)
+If I had more time, I would build in authentication
 
-[link to cv](will3.github.io/cv)
+[link to cv](http://will3.github.io/cv)
