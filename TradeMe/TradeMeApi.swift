@@ -20,17 +20,29 @@ enum TradeMeApiError: ErrorType {
  Api wrapper for TradeMe
  */
 class TradeMeApi {
+    /// Category number for the "Root" category
     static let categoryRootNumber = "0"
     
+    /**
+     Designated constructor
+     
+     - parameter hostUrl: host url to use
+     */
     init(hostUrl: NSURL) {
         self.hostUrl = hostUrl
     }
     
+    /// Host url to use
     var hostUrl: NSURL
+    
+    /// Headers used for authentication purposes
     var headers: [String: String]?
     
     /**
      Get category
+     
+     - parameter request: request object
+     - returns: promise of Category
      */
     func getCategory(request: GetCategoryRequest = GetCategoryRequest()) -> Promise<Category> {
         let url = hostUrl.URLByAppendingPathComponent("Categories/\(request.number).\(request.fileFormat)")
@@ -54,6 +66,9 @@ class TradeMeApi {
     
     /**
      Search
+     
+     - parameter request: request object
+     - returns: promise of SearchResponse
      */
     func search(request: SearchRequest = SearchRequest()) -> Promise<SearchResponse> {
         let url = hostUrl.URLByAppendingPathComponent("Search/General.json")
@@ -77,6 +92,9 @@ class TradeMeApi {
     
     /**
      Get listing detail
+     
+     - parameter request: request object
+     - returns: promise of ListedItemDetail
      */
     func getListingDetail(request: GetListingDetailRequest = GetListingDetailRequest()) -> Promise<ListedItemDetail> {
         let url = hostUrl.URLByAppendingPathComponent("Listings/\(request.listingId).\(request.file_format)")
