@@ -10,10 +10,20 @@ import Foundation
 import UIKit
 import SnapKit
 
+/**
+ Title view used in Category view nav bar. Shows category name and listing count
+ */
 class CategoryTitleView: UIView {
     var titleLabel = UILabel()
     var detailLabel = UILabel()
     
+    /**
+     Set up subviews for this view
+     
+     Should be called before this view is shown and only once
+     
+     - returns: self for chainability
+     */
     func setupSubviews() -> Self {
         addSubview(titleLabel)
         addSubview(detailLabel)

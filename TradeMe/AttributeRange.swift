@@ -9,7 +9,8 @@
 import Foundation
 import ObjectMapper
 
-class AttributeRange:Mappable {
+/// Model generated from Trade Me API, for detailed documentation refer to http://developer.trademe.co.nz/
+class AttributeRange: Mappable {
     required init?(_ map: Map) { }
     init() { }
     func mapping(map: Map) { }

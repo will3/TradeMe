@@ -22,14 +22,7 @@ class ListingService: NSObject {
         self.cache = cache
         self.promiseManager = promiseManager
     }
-    
-    // Sepcial categories, names are replaced
-    var specialCategories = [
-        "Trade Me Motors": "Motors",
-        "Trade Me Property": "Property",
-        "Trade Me Jobs": "Jobs"
-    ]
-    
+        
     /**
      Get category
      
@@ -58,7 +51,7 @@ class ListingService: NSObject {
                 .get(key) {
                     return self.api.getCategory(request) }
                 .then { category in
-                    self.transformCategory(category, specialCategories: self.specialCategories)
+                    category.transformName()
                     category.isRoot = isRoot
                     self.cache.setCategory(number, category: category)
                     return Promise(category)
@@ -83,19 +76,5 @@ class ListingService: NSObject {
      */
     func getListingDetail(request: GetListingDetailRequest) -> Promise<ListedItemDetail> {
         return api.getListingDetail(request)
-    }
-    
-    // MARK: Private
-    
-    /**
-     Transform category recursively,
-     replacing special category names
-     */
-    private func transformCategory(category: Category, specialCategories: [String: String]) {
-        category.name = specialCategories[category.name] ?? category.name
-        
-        category.subcategories.forEach { subcategory in
-            self.transformCategory(subcategory, specialCategories: specialCategories)
-        }
     }
 }

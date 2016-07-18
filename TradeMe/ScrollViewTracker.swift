@@ -9,47 +9,46 @@
 import Foundation
 import UIKit
 
-/**
- ScrollView Events
- */
+
+/// ScrollView Events
 enum ScrollViewEvents {
-    // Nothing interesting happening
+    /// Nothing interesting happening
     case Default
-    // User seems to be swiping up
+    /// User seems to be swiping up
     case SwipeUp
-    // User seems to be swiping down
+    /// User seems to be swiping down
     case SwipeDown
-    // Scroll view bounced from top
+    /// Scroll view bounced from top
     case BounceTop
-    // Scroll view bounced from bottom
+    /// Scroll view bounced from bottom
     case BounceBottom
 }
 
-/**
- Track scroll view for advance events
- */
+
+/// Track scroll view for events
 class ScrollViewTracker {
-    
+    /// Listener block for events
     typealias Listener = ((UIScrollView) -> Void)
     
-    // Max speed for "swipe up"
+    /// Max speed for "swipe up"
     var maxSpeed = CGFloat(24.0)
     
-    // Min speed for "swipe down"
+    /// Min speed for "swipe down"
     var minSpeed = CGFloat(-24.0)
     
-    // Last y
+    /// Last y
     private var lastY = CGFloat(0.0)
     
-    // Running speed
+    /// Running speed
     private var runningSpeed = CGFloat(0.0)
     
-    // Damping for running speed
+    /// Damping for running speed
     private var runningSpeedDamping = CGFloat(0.5)
     
-    // Listenrs by events
+    /// Listenrs by events
     private var listeners = [ScrollViewEvents: Listener]()
     
+    /// If true, all movement tracking is paused
     private var locked = false
     
     /**
@@ -93,13 +92,13 @@ class ScrollViewTracker {
         let speed = lastY - y
         
         if y < 0 {
-            next(event: .BounceTop, scrollView: scrollView)
+            notify(event: .BounceTop, scrollView: scrollView)
             lastY = y
             return
         }
         
         if y > scrollView.contentSize.height - scrollView.frame.height {
-            next(event: .BounceBottom, scrollView: scrollView)
+            notify(event: .BounceBottom, scrollView: scrollView)
             lastY = y
             return
         }
@@ -110,15 +109,21 @@ class ScrollViewTracker {
         lastY = y
         
         if runningSpeed > maxSpeed {
-            next(event: .SwipeUp, scrollView: scrollView)
+            notify(event: .SwipeUp, scrollView: scrollView)
         } else if runningSpeed < minSpeed {
-            next(event: .SwipeDown, scrollView: scrollView)
+            notify(event: .SwipeDown, scrollView: scrollView)
         } else {
-            next(event: .Default, scrollView: scrollView)
+            notify(event: .Default, scrollView: scrollView)
         }
     }
     
-    private func next(event event: ScrollViewEvents, scrollView: UIScrollView) {
+    /**
+     Invoke listeners when an event has been raised
+     
+     - parameter event: event to fire
+     - scrollView: scrollView the event originated from
+     */
+    private func notify(event event: ScrollViewEvents, scrollView: UIScrollView) {
         // Notify
         listeners[event]?(scrollView)
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Model generated from Trade Me API, for detailed documentation refer to http://developer.trademe.co.nz/
 enum AllowsPickups : Int {
     case None = 0   // The listing allows pick up, but does not require it.
     case Allow = 1  // The buyer can pickup if they so choose.

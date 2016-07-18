@@ -9,12 +9,20 @@
 import Foundation
 import UIKit
 
+/**
+ Cell used to show a listing detail
+ */
 class ListingDetailCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
 }
 
 extension ListingDetailCell {
+    /**
+     Draw a listing detail
+     
+     - parameter row: listing detail to draw
+     */
     func drawListingDetail(row: ListingDetail) {
         titleLabel.text = row.title
         detailLabel.text = row.detail

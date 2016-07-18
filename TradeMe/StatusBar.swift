@@ -11,7 +11,6 @@ import UIKit
 
 class StatusBar {
     static func setBackgroundColor(color: UIColor) {
-        
         guard  let statusBar = UIApplication.sharedApplication().valueForKey("statusBarWindow")?.valueForKey("statusBar") as? UIView else {
             return
         }

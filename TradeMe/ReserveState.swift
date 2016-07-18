@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Model generated from Trade Me API, for detailed documentation refer to http://developer.trademe.co.nz/
 enum ReserveState: Int {
     // There is no reserve on the item (i.e. the reserve price is the same as the starting price).
     case None = 0

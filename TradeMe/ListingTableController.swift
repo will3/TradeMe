@@ -14,6 +14,15 @@ protocol ListingTableControllerDelegate: class {
     func listingTableController(tableController: ListingTableController, didSelectListing listing: Listing)
 }
 
+protocol ListingTableControllerProtocol {
+    func hookTableView(tableView: UITableView) -> ListingTableControllerProtocol
+    func reloadData(tableView: UITableView, list: [Listing]) -> Self
+    func loadMore(tableView: UITableView, list: [Listing]) -> Self
+    func showLoading(flag: Bool) -> Self
+    weak var delegate: ListingTableControllerDelegate? { get set }
+    var scrollViewTracker: ScrollViewTracker { get }
+}
+
 /**
  Controller for listing tableView
  
@@ -26,7 +35,7 @@ protocol ListingTableControllerDelegate: class {
     .reloadData(tableView, list: list)
  ```
  */
-class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelegate {
+class ListingTableController: NSObject, ListingTableControllerProtocol, UITableViewDataSource, UITableViewDelegate {
     
     // ListingTableController Sections
     enum Sections: Int {
@@ -65,7 +74,7 @@ class ListingTableController: NSObject, UITableViewDataSource, UITableViewDelega
      - parameter tableView: tableView to configure
      - returns: self for chainability
      */
-    func hookTableView(tableView: UITableView) -> ListingTableController {
+    func hookTableView(tableView: UITableView) -> ListingTableControllerProtocol {
         tableView.registerNibs([.listingCell, .emptyCell, .loadingCell])
         tableView.delegate = self
         tableView.dataSource = self

@@ -15,6 +15,7 @@ import AppInjector
  */
 class ListingDetailViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    /// ListingDetailViewController table sections
     enum Sections : Int {
         case Poster = 0
         case Header = 1
@@ -55,6 +56,8 @@ class ListingDetailViewController : UIViewController, UITableViewDataSource, UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        AccessibilityIdentifiers.listingDetailView.set(viewController: self)
         
         Injector.defaultInjector.injectDependencies(self)
         

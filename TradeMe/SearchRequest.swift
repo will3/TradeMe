@@ -9,37 +9,7 @@
 import Foundation
 import ObjectMapper
 
-enum PhotoSize : String {
-    case Thumbnail = "Thumbnail"
-    case List = "List"
-    case Medium = "Medium"
-    case Gallery = "Gallery"
-    case Large = "Large"
-    case FullSize = "FullSize"
-}
-
-enum SortOrder : String {
-    case Default = "Default"
-    case FeaturedFirst = "FeaturedFirst"
-    case SuperGridFeaturedFirst = "SuperGridFeaturedFirst"
-    case TitleAsc = "TitleAsc"
-    case ExpiryAsc = "ExpiryAsc"
-    case ExpiryDesc = "ExpiryDesc"
-    case PriceAsc = "PriceAsc"
-    case PriceDesc = "PriceDesc"
-    case BidsMost = "BidsMost"
-    case BuyNowAsc = "BuyNowAsc"
-    case BuyNowDesc = "BuyNowDesc"
-    case ReviewsDesc = "ReviewsDesc"
-    case HighestSalary = "HighestSalary"
-    case LowestSalary = "LowestSalary"
-    case LowestKilometres = "LowestKilometres"
-    case HighestKilometres = "HighestKilometres"
-    case NewestVehicle = "NewestVehicle"
-    case OldestVehicle = "OldestVehicle"
-    case BestMatch = "BestMatch"
-}
-
+/// Model generated from Trade Me API, for detailed documentation refer to http://developer.trademe.co.nz/
 class SearchRequest: Mappable {
     init() { }
     required init?(_ map: Map) { }

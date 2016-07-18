@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+/**
+ Cell used in category view, shows category name and listing count
+ */
 class CategoryCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!

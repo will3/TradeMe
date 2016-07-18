@@ -9,12 +9,20 @@
 import Foundation
 import UIKit
 
+/**
+ Cell to display poster of listing, currently, only one image is displayed
+ */
 class ListingPosterCell: UITableViewCell {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var overlayView: UIView!
 }
 
 extension ListingPosterCell {
+    /**
+     Draw a listing detail
+     
+     - parameter listingDetail: listing detail to draw
+     */
     func drawListingDetail(listingDetail: ListedItemDetail) {
         if let photo = listingDetail.photos.first {
             posterImageView.loadImageFromURLString(photo.value?.large ?? "")

@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import AppInjector
 
+/// UIApplicationDelegate implementation
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -20,9 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let cacheSizeDisk = 100 * 1024 * 1024
         let sharedCache = NSURLCache(memoryCapacity: cacheSizeMemory, diskCapacity: cacheSizeDisk, diskPath: "trademe")
         NSURLCache.setSharedURLCache(sharedCache)
-        
+         
         // Set up DI container
-        AppContainer.setup()
+        appContainer(Injector.defaultInjector)
         
         return true
     }

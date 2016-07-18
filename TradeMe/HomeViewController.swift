@@ -13,7 +13,10 @@ import AppInjector
 /**
  HomeViewController is the first screen the user sees
 
- Use search bar and / or filter button to limit the listings shown by search terms or category
+ Use search bar to search by term
+ 
+ Use filter button to filter by category
+ 
  Tap on any listing to see details
  */
 class HomeViewController: UIViewController, UIPopoverPresentationControllerDelegate, CategoryViewControllerDelegate, UISearchBarDelegate, ListingTableControllerDelegate {
@@ -28,7 +31,7 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     // Listing service
     var listingService: ListingService!
     // Listing table controller
-    var listingTableController: ListingTableController!
+    var listingTableController: ListingTableControllerProtocol!
     
     // MARK: Properties
     
@@ -42,6 +45,8 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     var category: Category?
     // List shown
     var list = [Listing]()
+    // If set to false , skip property injection, used in tests
+    var injectDependencies = true
     
     // Total count of listings
     private var totalCount = 0
@@ -69,7 +74,12 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Injector.defaultInjector.injectDependencies(self)
+        AccessibilityIdentifiers.homeView.set(viewController: self)
+        
+        if injectDependencies {
+            Injector.defaultInjector.injectDependencies(self)
+            listingTableController = Injector.defaultInjector.resolve("listingTableController") as! ListingTableControllerProtocol
+        }
         
         // Set up table view
         listingTableController.hookTableView(tableView)
@@ -107,6 +117,7 @@ class HomeViewController: UIViewController, UIPopoverPresentationControllerDeleg
         // Set up navigation title view
         searchBar.frame = CGRectMake(0, 0, 260.0, 30.0)
         searchBar.delegate = self
+        AccessibilityIdentifiers.searchBar.set(view: searchBar)
         navigationItem.titleView = searchBar
         updateSearchbarPlaceholder()
         

@@ -10,14 +10,17 @@
 import UIKit
 import AppInjector
 
-// CategoryViewController Events
+/// CategoryViewController Events
 protocol CategoryViewControllerDelegate: class {
-    // Called when a category is chosen
+    /// Called when a category is chosen
     func didChooseCategory(category: Category, viewController: CategoryViewController)
-    // Called when view is finished
+    /// Called when view is finished
     func didFinishChoosingCategory(viewController: CategoryViewController)
 }
 
+/**
+ Show current selected category and it's subcategories, show listings count and allow user to drill down
+ */
 class CategoryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: IBOutlet
@@ -26,28 +29,36 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: Properties
     
-    // Category shown
+    /// Category currently shown
     var category: Category?
     
+    /**
+     Delegate for view controller events
+     
+     - see: CategoryViewControllerDelegate
+     */
     weak var delegate: CategoryViewControllerDelegate?
     
-    // Fitlered subcategories, only none 0 subcategories are shown
+    /// Fitlered subcategories, only none 0 subcategories are shown
     private var filteredSubcategories = [Category]()
     
-    // Title view shown
+    /// Title view shown
     private var titleView = CategoryTitleView().setupSubviews()
     
-    // Flag for loading state
+    /// Flag for loading state
     private var loading = true
     
     // MARK: Injected
     
+    /// Listing service used, injected in viewDidLoad
     var listingService: ListingService!
     
     // MARK: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        AccessibilityIdentifiers.categoryView.set(viewController: self)
         
         Injector.defaultInjector.injectDependencies(self)
         
@@ -101,6 +112,7 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    // MARK: Done button events
     func onDonePressed() {
         if let category = category {
             delegate?.didChooseCategory(category, viewController: self)
@@ -132,6 +144,7 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
         categoryCell.detailLabel.text = subcategory.count > 0 ?
             String(format: format, subcategory.count) :
             ""
+        categoryCell.accessibilityLabel = subcategory.name
         
         // Assume root subcategories always expandable
         categoryCell.accessoryType = (category.isRoot || subcategory.subcategories.count > 0) ?
@@ -174,12 +187,21 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // MARK: Private 
     
+    /**
+     Show / Hide loading view
+     
+     - parameter flag: false to hide loading view
+     - returns: self for chainability
+     */
     func showLoading(flag: Bool) -> Self {
         loading = flag
         updateDetailLabel()
         return self
     }
     
+    /**
+     Update detail label to show number of listings
+     */
     func updateDetailLabel() {
         let format = NSLocalizedString("%li listings", comment: "")
         titleView.detailLabel.text = loading ?

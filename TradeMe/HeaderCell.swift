@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// Cell used to imitate a header from a grouped table view
 class HeaderCell : UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!

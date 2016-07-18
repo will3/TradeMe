@@ -16,6 +16,11 @@ class ListingHeaderCell: UITableViewCell {
 }
 
 extension ListingHeaderCell {
+    /**
+     Draw a detailed listing
+     
+     - parameter listingDetail: detail listing to draw
+     */
     func drawListingDetail(listingDetail: ListedItemDetail) {
         titleLabel.text = listingDetail.title
         priceLabel.text = listingDetail.priceDisplay

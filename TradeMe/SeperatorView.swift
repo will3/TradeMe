@@ -10,38 +10,40 @@ import Foundation
 import UIKit
 import SnapKit
 
+/// Class for separator view, this should never be used directly
 class _SeparatorView : UIView { }
 
+/// Parameters for drawing a separator
 struct SeperatorParams {
-    // Preset for across
+    /// Preset for across
     static let across: SeperatorParams = {
         var params = SeperatorParams()
         return params
     }()
     
-    // Preset for row
+    /// Preset for row
     static let row: SeperatorParams = {
         var params = SeperatorParams()
         params.left = 12.0
         return params
     }()
     
-    // Preset for none
+    /// Preset for none
     static let none: SeperatorParams = {
         var params = SeperatorParams()
         params.none = true
         return params
     }()
     
-    // If true, hide separator
+    /// If true, hide separator
     var none = false
-    // Color of separator
+    /// Color of separator
     var color = UIColor(white: 0.66, alpha: 1.0)
-    // Height of separator
+    /// Height of separator
     var width = 0.5
-    // Left inset
+    /// Left inset
     var left = 0.0
-    // Right inset
+    /// Right inset
     var right = 0.0
 }
 

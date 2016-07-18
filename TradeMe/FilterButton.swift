@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// Button used to display category filter
 class FilterButton: UIButton {
     override func willMoveToWindow(newWindow: UIWindow?) {
         layer.cornerRadius = bounds.width / 2
@@ -17,5 +18,8 @@ class FilterButton: UIButton {
         layer.shadowColor = UIColor.blackColor().CGColor
         layer.shadowOffset = CGSizeMake(2.0, 2.0);
         layer.shadowOpacity = 0.5;
+        
+        self.accessibilityIdentifier = AccessibilityIdentifiers.filterButton.rawValue
+        AccessibilityIdentifiers.filterButton.set(view: self)
     }
 }

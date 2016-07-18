@@ -9,6 +9,7 @@
 import Foundation
 import ObjectMapper
 
+/// Model generated from Trade Me API, for detailed documentation refer to http://developer.trademe.co.nz/
 class GeographicLocation: Mappable {
     required init?(_ map: Map) { }
     init() { }

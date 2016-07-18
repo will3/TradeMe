@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+/**
+ Cell to used to display a listing
+ 
+ Shows location, end time, description, poster image, bidding price, reserve status, buy now price, buy now status of the listing
+ */
 class ListingCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
@@ -28,6 +33,11 @@ class ListingCell: UITableViewCell {
 }
 
 extension ListingCell {
+    /**
+     Draw a listing
+     
+     - parameter currencyFormat: format used for displaying currencies
+     */
     func drawListing(listing: Listing, currencyFormat: NSNumberFormatter) {
         
         // Draw location

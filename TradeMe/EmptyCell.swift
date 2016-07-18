@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// Cell used to display empty states
 class EmptyCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
 }

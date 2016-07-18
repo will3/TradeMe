@@ -27,6 +27,9 @@ class Throttle<T>: NSObject {
     // Value scheduled
     private var scheduledValue: T?
     
+    // Fired date scheduled
+    private var scheduledDate: NSDate?
+    
     init(interval: Double = 0.2, start: NSDate? = nil) {
         self.interval = interval
         if start != nil {
@@ -70,6 +73,7 @@ class Throttle<T>: NSObject {
         if timeDiff > interval {
             if nextBlock != nil {
                 nextBlock!(value)
+                lastFired = date
                 return
             }
         }
@@ -82,17 +86,22 @@ class Throttle<T>: NSObject {
         }
         
         // Schedule output
+        let delay = interval - timeDiff
         scheduledValue = value
-        NSTimer.scheduledTimerWithTimeInterval(interval - timeDiff, target: self, selector: #selector(Throttle.fireOutput), userInfo: nil, repeats: false)
+        scheduledDate = date.dateByAddingTimeInterval(delay)
+        NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(Throttle.fireOutput), userInfo: nil, repeats: false)
     }
     
     /**
      Fire output, used internally by timers
      */
     func fireOutput() {
-        if scheduledValue != nil && nextBlock != nil{
+        if scheduledValue != nil && nextBlock != nil && scheduledDate != nil{
             nextBlock!(scheduledValue!)
+            lastFired = scheduledDate!
+            
             scheduledValue = nil
+            scheduledDate = nil
         }
     }
 }
