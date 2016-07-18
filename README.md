@@ -5,8 +5,6 @@ Created for Trade Me iOS Developer technical test
 Documentation(All internal classes): [link](https://will3.github.io/TradeMe/docs/)
 
 ![image1](https://raw.githubusercontent.com/will3/TradeMe/master/preview1.gif)
-![image2](https://raw.githubusercontent.com/will3/TradeMe/master/preview2.gif)
-![image3](https://raw.githubusercontent.com/will3/TradeMe/master/preview3.gif)
 
 ### To Run
 
