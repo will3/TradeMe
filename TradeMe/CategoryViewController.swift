@@ -104,11 +104,20 @@ class CategoryViewController: UIViewController, UITableViewDataSource, UITableVi
             action: #selector(CategoryViewController.onDonePressed))
         navigationItem.rightBarButtonItem = doneButton
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if let category = category {
-            delegate?.didChooseCategory(category, viewController: self)
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let navigationController = navigationController {
+            // Back was pressed
+            if navigationController.viewControllers.indexOf(self) == nil {
+                if let categoryViewController = navigationController.viewControllers.last as? CategoryViewController {
+                    // Select parent category
+                    if let parentCategory = categoryViewController.category {
+                        delegate?.didChooseCategory(parentCategory, viewController: categoryViewController)
+                    }
+                }
+            }
         }
     }
     
