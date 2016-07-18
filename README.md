@@ -4,7 +4,8 @@ Created for Trade Me iOS Developer technical test
 
 Documentation(All internal classes): [link](https://will3.github.io/TradeMe/docs/)
 
-![image1](https://raw.githubusercontent.com/will3/TradeMe/master/preview1.gif)
+![preview1](https://raw.githubusercontent.com/will3/TradeMe/master/preview1.gif)
+![preview4](https://raw.githubusercontent.com/will3/TradeMe/master/preview4.gif)
 
 ### To Run
 
@@ -41,6 +42,7 @@ View expands when user scroll down, similar to the Safari App
 UI Tests were written using the Page pattern where Automation details are encapsulated and exposed through a nice, chainable 'Page' interface, for e.g.
 
 ```swift
+// Open category filter, choose property, enter "Treasure" in search box and select first listing
 HomePage(app)
 	.showCategoryPage()
 	.select(category: "Property")
