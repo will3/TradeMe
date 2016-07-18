@@ -82,7 +82,6 @@
 		6FBA97561D38DCCE00833B65 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA97551D38DCCE00833B65 /* CategoryViewController.swift */; };
 		6FBA97591D38DCCE00833B65 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FBA97571D38DCCE00833B65 /* Main.storyboard */; };
 		6FBA975B1D38DCCE00833B65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FBA975A1D38DCCE00833B65 /* Assets.xcassets */; };
-		6FBA97691D38DCCE00833B65 /* TradeMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA97681D38DCCE00833B65 /* TradeMeTests.swift */; };
 		6FBA97741D38DCCE00833B65 /* TradeMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA97731D38DCCE00833B65 /* TradeMeUITests.swift */; };
 		6FF310A01D3BAE8D00025CE9 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF3109F1D3BAE8D00025CE9 /* Async.swift */; };
 		6FF310A51D3C514300025CE9 /* ThrottleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF310A41D3C514300025CE9 /* ThrottleTests.swift */; };
@@ -204,7 +203,6 @@
 		6FBA975A1D38DCCE00833B65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6FBA975F1D38DCCE00833B65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FBA97641D38DCCE00833B65 /* TradeMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FBA97681D38DCCE00833B65 /* TradeMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeMeTests.swift; sourceTree = "<group>"; };
 		6FBA976A1D38DCCE00833B65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FBA976F1D38DCCE00833B65 /* TradeMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FBA97731D38DCCE00833B65 /* TradeMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeMeUITests.swift; sourceTree = "<group>"; };
@@ -520,7 +518,6 @@
 				6FF310AD1D3C597400025CE9 /* Formatters */,
 				6FF310A31D3C512B00025CE9 /* Utils */,
 				6F8DC2441D3A2D4600F1BF95 /* Transforms */,
-				6FBA97681D38DCCE00833B65 /* TradeMeTests.swift */,
 				6FBA976A1D38DCCE00833B65 /* Info.plist */,
 			);
 			path = TradeMeTests;
@@ -970,7 +967,6 @@
 				6FF310B81D3C635100025CE9 /* MockHomeViewController.swift in Sources */,
 				6FF310A51D3C514300025CE9 /* ThrottleTests.swift in Sources */,
 				6F8DC2461D3A2D5400F1BF95 /* StandardDateTransformTests.swift in Sources */,
-				6FBA97691D38DCCE00833B65 /* TradeMeTests.swift in Sources */,
 				6FF310B51D3C5EF100025CE9 /* HomeViewControllerTests.swift in Sources */,
 				6FF310AC1D3C588900025CE9 /* Category_TransformTests.swift in Sources */,
 				6FF310B11D3C5B9400025CE9 /* ListingFormattingTests.swift in Sources */,
